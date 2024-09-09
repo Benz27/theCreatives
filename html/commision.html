@@ -1,0 +1,779 @@
+<?php
+session_start();
+
+include("../php/conn.php");
+include("../php/read.php");
+
+$user_data=check_login($link);
+
+?>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>theCreatives</title>
+
+    <!-- main css -->
+    <link rel="stylesheet" href="../css/comm.css">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+
+    <!-- link for animate-->
+    <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <!-- link for font awesome -->
+    <script src="https://kit.fontawesome.com/9334436048.js" crossorigin="anonymous"></script>
+
+
+
+</head>
+<body>
+    <!-- header -->
+    <style>a{text-decoration: none;}</style>
+    <header class="header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-2 px-0">
+                    <div class="header_logo">
+                        <a href="explore.html"><span>the</span>Creatives</a>
+                    </div>
+                </div>
+                <div class="col-lg-10 ">
+                    <div class="header_right">
+                        <div class="header_right_auth">
+                            <a href="explore.html">Home</a>
+                            <a href="../html/artists.html">Artists</a>
+                            <a href="../php/logout.php" >Log Out</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- profile -->
+    <div id="content" class="container p-0">
+        <!-- <div class="profile-header">
+            <div class="profile-header-cover">
+                <img src="../images/white.png" alt="" style="height: 100%;width: 100%;" id="my_image4"/>
+              </div>
+              <div class="profile-header-content">
+                  <div class="profile-header-img">
+                    <img src="../images/empty.png" alt="" style="height: 100%;width: 100%;" id="my_image3"/>
+                  </div>
+                  <div class="profile-header-info">
+                      <h4 class="m-t-sm" id="uname"></h4>
+                  
+                  </div>
+              </div>
+    
+            <ul class="profile-header-tab nav nav-tabs">
+                <li class="nav-item"><a id="ar1" href="" class="nav-link" data-toggle="tab">ABOUT</a></li>
+                <li class="nav-item"><a id="ar2" href="" class="nav-link" data-toggle="tab">E-PORTFOLIO</a></li>
+                <li class="nav-item"><a id="ar3" href="" class="nav-link active show" data-toggle="tab">REQUEST COMMISSION</a></li>
+                <li class="nav-item"><a id="ar4" href="" class="nav-link" data-toggle="tab">PRICE LIST</a></li>
+            </ul>
+            
+        </div> -->
+        <!-- interface ng profile transaction -->
+      <div id="transac">
+        
+      </div>
+    </div>
+
+    <div class="container">
+      
+        <div class="row">
+          
+            <div class="col-sm-6">
+  
+                <!-- <form id="form" action="" method="post"> -->
+                    <input type="text" name="artistid" id="artistid" hidden>
+                    <input type="text" name="artistuname" id="artistuname" hidden>
+                    <input type="text" name="fulln" id="fulln" hidden>
+                    
+                <label>Art Type</label>
+                <input type="text" id="type" name="type" readonly>
+                <!-- <select id="type" name="type" required>
+                    <option value="" selected="selected" hidden>Select type of art</option>
+                </select> -->
+            </div>
+                <div class="col-sm-6">
+                   <label>Art Size</label>
+                   <input type="text" id="size" name="size" readonly>
+                   <!-- <select id="size" name="size" required>
+                      </select> -->
+                      
+                    </div> 
+                    
+                    <div class="col-sm-6">      
+                      <label>Date Commisioned</label>
+                      <!-- <input type="date" id="tgdte" name="date" required> -->
+                      <input type="text" id="tartgdte" name="tardate" readonly>
+                    </div>
+
+                    <div class="col-sm-6">      
+                      <label>Target Date</label>
+                      <input type="text" id="tgdte" name="date" required>
+                      <input type="text" id="tartgdte" name="tardate" hidden>
+                    </div>
+
+                    <div class="col-sm-6">      
+                        <label>Base Price</label>
+                        <input type="text" id="price" name="" readonly>
+                        <input type="text" id="pr" name="price" hidden>
+                      </div>
+                   
+
+                <label>Commission Details:</label>
+                
+                <textarea id="addet" style="height:200px" placeholder="Type out specifics here." name="addet" readonly></textarea>
+               
+
+                <div class="col-25" id="rp" hidden>
+                <label>Reference Picture:</label>
+               <input type="text" style="width: 60%;" id="txtsf" value="" name="refpicname" readonly>
+                
+                </div>
+                <div class="piccontainer" id="rpic" hidden>
+
+                    <img src="../images/can.png" alt="empty" style="width:600px;height:300px;position: relative;margin-right: 0px;" id="my_image">
+                    <input type="text" name="refpic" id="artwork" value="" hidden> 
+                    <input type="file" id = "ifile" hidden>
+                </div> 
+        
+               <hr>
+                <div class="row">
+                   <label>Artist Commisioned</label>
+                  <div class="col-sm-3">
+                   
+                    <!-- <input type="text" id="txtsf" value="" name="refpicname" readonly> -->
+                    <img src="../images/empty.png" alt="" style="height: 70%;width: 60%;float:right;" id="my_image3"/>
+                    <!-- max-height: 70%;max-width: 70%; -->
+                  </div>
+                  
+                  <div class="col-sm-3">
+                     <label style="width: 100%;" id="luname"></label>
+                     <label style="width: 100%;" id="lemail"></label>
+                    <!-- <input type="text" id="" value="" name="" style="width: 100%;" readonly>
+                    <input type="text" id="" value="" name="" style="width: 100%;" readonly> -->
+                  </div>
+                  <div class="col-sm-5">
+                    <label style="width: 100%;" id="lgname"></label>
+                    <label style="width: 100%;" id="lgnum"></label>
+                    <!-- <input type="text" id="" value="" name="" style="width: 100%;" readonly>
+                    <input type="text" id="" value="" name="" style="width: 100%;" readonly> -->
+                  </div>
+                </div>
+      
+            <div id="paytable">
+
+                 <hr>
+
+            
+                  <table class="table">
+                      <h5>Payment</h5>
+                      <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Reference Number</th>
+                          <th scope="col">Proof of Transaction</th>
+                          <th scope="col">Type</th>
+                        </tr>
+                      </thead>
+                      <tbody id="tbody">
+
+
+                        <div id="payrow">
+
+
+
+
+                      </div>
+
+
+                      </tbody>
+
+                  </table>
+            
+                 
+                  
+            </div>
+
+
+
+            <div class="row">
+          
+
+                <button type="button" id="btnadd" style="margin-bottom: 2%;">Add Payment</button>
+
+        
+              <hr>
+              <label id="lbl"></label>
+              <hr>
+              <div class="col-25">
+
+
+                  
+                  <button type="button" id="su" onclick="as(6);as(5);" style="margin-right: 5%;">Cancel</button>
+                  <button type="button" id="vi" onclick="" hidden><a style="color:black" href="" id="via">View Summary</a></button>
+                </div>
+            </div>
+            <!-- </form> -->
+        </div>
+
+      </div>
+
+      <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+          <span class="close">&times;</span>
+      
+          <div class="col-12" id="rds">
+            <input type="radio" class="form-check-input" name="ck" value="PARTIAL" id="1" onclick="rad(this.value)">
+            <label style="margin-right:5%" class="form-check-label" for="save-info">Partial Payment</label>
+            <input type="radio" class="form-check-input" name="ck" value="FULL" id="2" onclick="rad(this.value)">
+            <label class="form-check-label" for="save-info">Full Payment</label>
+          </div>
+
+          <div class="col-12">
+          <label>Reference Number:</label>
+          <input type="text" style="width: 40%;" id="txtrnum" value="" name="refpicname">
+        </div>
+        <br>
+        <div class="col-12">
+          <label id="pp">Proof of Payment:</label>
+                      <button type="button" id="btncl">Clear</button>
+                      <button id="btncr" type="button" onclick="ifile.click();conv(1);">Browse files</button>
+                      <input type="text" style="width: 50%;" id="txtsfr" value="" name="refpicname" readonly>
+                      <br>
+          <img id="rimg" src="">
+      
+          <button id="btnms" type="button" onclick="savepay();">Save</button>
+          <button id="btnmc" type="button" onclick="span.click();">Close</button>
+        </div>
+      </div>
+      
+      </div>
+      <!-- <div class="chatcont">
+        <div class="row">
+          <div>
+        <img src="../images/message.png" id="my_image5" height="30px">
+        <label id="clabel">Chat with Artist</label>
+        </div>
+      </div>
+      </div> -->
+
+    <!-- js for bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
+    
+    <script>
+
+        
+
+        var modal = document.getElementById("myModal");
+
+var zx=0;
+var btn = document.getElementById("btnadd");
+var imgq;
+var xy=0;
+var tid=0;
+var rcount =0;
+var rcnt=0;
+var tpe="PARTIAL";
+var span = document.getElementsByClassName("close")[0];
+
+
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+span.onclick = function() {
+  modal.style.display = "none";
+  clearr();
+}
+
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+    clearr();
+  }
+}
+
+
+function as(x){
+
+// var today = new Date();
+// var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+// // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()+":"+today.getUTCMilliseconds();
+// var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+// // var dateTime = date+' '+time;
+// var dateTime = date;
+// document.getElementById("tartgdte").value=dateTime;
+
+var xhttp = new XMLHttpRequest();
+    
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+
+        if(x==1){
+
+     
+          var str=this.responseText;
+      
+      const arr= str.split("|<~*931>|");
+
+      
+
+      document.getElementById("type").value=arr[2];
+
+      document.getElementById("size").value=arr[3];
+
+      document.getElementById("tartgdte").value=arr[10];
+      document.getElementById("tgdte").value=arr[9];
+      document.getElementById("price").value="PHP "+arr[4]+".00";
+
+      if(arr[6]!=""){
+
+        document.getElementById("rp").hidden=false;
+        document.getElementById("rpic").hidden=false;
+        document.getElementById("txtsf").value=arr[7];
+        document.getElementById("my_image").setAttribute('src',arr[6]);
+      }
+      if(arr[18]!=""){
+
+        document.getElementById("my_image3").setAttribute('src',arr[18]);
+      }
+      document.getElementById("addet").value=arr[5];
+          
+      document.getElementById("luname").innerHTML="@"+arr[16];
+      document.getElementById("lemail").innerHTML=arr[17];
+      document.getElementById("lgname").innerHTML="Gcash Name: "+arr[14];
+      document.getElementById("lgnum").innerHTML="Gcash Number: "+arr[15];
+
+
+        }
+        else if(x==2||x==0){
+
+        if(this.responseText==""){
+
+          document.getElementById("paytable").hidden=true;
+
+        }else{
+          document.getElementById("tbody").innerHTML=this.responseText;
+          rcount=0;
+          rcnt=0;
+        }
+         
+          // console.log(this.responseText);
+        }else if(x==3){
+
+
+
+
+          rcnt=Number(this.responseText);
+
+  
+
+        }else if(x==4){
+
+
+
+
+        if(this.responseText==1){
+    
+
+          document.getElementById("btnadd").hidden=true;
+
+
+
+        }
+
+
+
+        }else if(x==5){
+
+
+ 
+          
+      var str2=this.responseText;
+      const ar= str2.split(",");
+console.log(this.responseText);
+       switch(Number(ar[0])) {
+  case 0:
+ 
+  document.getElementById("lbl").innerHTML="Commision is waiting for an approval";
+  document.getElementById("btnadd").hidden=true;
+
+  break;
+  case 1:
+    document.getElementById("lbl").innerHTML="Commision is now finished and waiting for the payment";
+
+    break;
+    case 2:
+    document.getElementById("lbl").innerHTML="Commision has been approved";
+
+    break;
+    case 3:
+    document.getElementById("lbl").innerHTML="Commision has been rejected";
+    document.getElementById("btnadd").hidden=true;
+    document.getElementById("su").hidden=true;
+    break;
+    case 4:
+    document.getElementById("lbl").innerHTML="Commision has been canceled";
+    document.getElementById("btnadd").hidden=true;
+    document.getElementById("su").hidden=true;
+    break;
+    case 5:
+    document.getElementById("lbl").innerHTML="Commision has been completed";
+    document.getElementById("btnadd").hidden=true;
+    document.getElementById("su").hidden=true;
+    document.getElementById("vi").hidden=false;
+
+    break;
+  default:
+
+        }
+
+
+
+
+
+
+        switch(Number(ar[1])) {
+
+    case 0:
+
+   
+    break;
+    case 1:
+  
+
+    break;
+    case 2:
+    document.getElementById("btnadd").hidden=true;
+          
+    break;
+    default:
+
+
+
+
+
+
+
+
+
+
+
+        }
+        }
+
+
+
+
+      }
+     
+      }
+      var u = window.location.href;
+                    var ur = new URL(u);
+        var aid = ur.searchParams.get("aid");
+        var bid = ur.searchParams.get("bid");
+        var cid = ur.searchParams.get("cid");
+
+      if(x==2){
+
+var formdata = new FormData();
+for(let i=1; i<=rcount;i++){
+formdata.append(i+"rnum",document.getElementById(i+"rnum").innerHTML);
+formdata.append(i+"img",document.getElementById(i).value);
+formdata.append(i+"imgn",document.getElementById(i).innerHTML);
+formdata.append(i+"type",document.getElementById(i+"type").innerHTML);
+formdata.append(i+"dte",document.getElementById(i+"dte").innerHTML);
+formdata.append(i+"dteti",document.getElementById(i+"dteti").innerHTML);
+ }
+
+ formdata.append("rcount",rcount);
+
+
+  xhttp.open("POST", "../php/comm.php?load="+x+"&cid="+cid+"&bid="+bid+"&aid="+aid, true);
+  xhttp.send(formdata);
+}else if(x==0||x==3||x==4||x==1||x==5){
+
+
+
+  xhttp.open("GET", "../php/comm.php?load="+x+"&cid="+cid+"&bid="+bid+"&aid="+aid, true);
+  xhttp.send();
+
+
+
+}else if(x==6){
+
+
+  var formdata = new FormData();
+
+formdata.append("btn","CANCELED");
+
+
+
+  xhttp.open("POST", "../php/comm.php?load="+x+"&cid="+cid+"&bid="+bid+"&aid="+aid, true);
+  xhttp.send(formdata);
+
+
+
+
+}
+
+
+
+
+}
+
+function rad(x){
+
+tpe=x;
+
+}
+
+function savepay(){
+if(xy==0){
+
+rcount+=1;
+rcnt+=1;
+
+const element = document.getElementById("tbody");
+const tr = document.createElement("tr");
+
+
+
+const td = document.createElement("th");
+const tdtxt = document.createTextNode(element.children.length+1);
+
+td.appendChild(tdtxt);
+tr.appendChild(td);
+
+const td2 = document.createElement("td");
+td2.style.cursor="pointer";
+td2.setAttribute("id", rcount+"rnum");
+const td2txt = document.createTextNode(document.getElementById("txtrnum").value);
+td2.appendChild(td2txt);
+tr.appendChild(td2);
+
+const td3 = document.createElement("td");
+td3.setAttribute("id", rcount);
+td3.value=imgq;
+td3.style.cursor="pointer";
+td3.setAttribute("onclick", "mod(this.value,this.id)");
+
+const td3txt = document.createTextNode(document.getElementById("txtsfr").value);
+td3.appendChild(td3txt);
+tr.appendChild(td3);
+
+
+const td4 = document.createElement("td");
+td4.setAttribute("id", rcount+"type");
+const td4txt = document.createTextNode(tpe);
+td4.appendChild(td4txt);
+tr.appendChild(td4);
+
+
+
+var today = new Date();
+var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+var dateTime = date+' '+time;
+
+const td5 = document.createElement("td");
+td5.setAttribute("id", rcount+"dte");
+td5.hidden=true;
+const td5txt = document.createTextNode(date);
+td5.appendChild(td5txt);
+tr.appendChild(td5);
+
+
+const td6 = document.createElement("td");
+td6.setAttribute("id", rcount+"dteti");
+td6.hidden=true;
+const td6txt = document.createTextNode(dateTime);
+td6.appendChild(td6txt);
+tr.appendChild(td6);
+
+
+
+
+
+
+element.appendChild(tr);
+document.getElementById("paytable").hidden=false;
+span.click();
+as(2);
+as(4);
+as(5);
+imgq="";
+}
+
+}
+
+function mod(x,y){
+ 
+  xy=1;
+  tid=y;
+  btn.click();
+
+  document.getElementById("txtrnum").value=document.getElementById(y+"rnum").innerHTML;
+  document.getElementById("txtsfr").value=document.getElementById(y).innerHTML;
+  document.getElementById("rimg").setAttribute('src',x);
+
+  document.getElementById("txtrnum").readOnly=true;
+  document.getElementById("txtsfr").readOnly=true;
+  document.getElementById("btnms").hidden=true;
+
+  document.getElementById("rds").hidden=true;
+  document.getElementById("btncl").hidden=true;
+  document.getElementById("btncr").hidden=true;
+}
+
+function ene(x){
+
+
+
+
+
+
+}
+function clearr(){
+  xy=0;
+  document.getElementById("txtrnum").value="";
+  document.getElementById("txtsfr").value="";
+  document.getElementById("rimg").setAttribute('src',"");
+
+  document.getElementById("txtrnum").readOnly=false;
+  document.getElementById("txtsfr").readOnly=false;
+  document.getElementById("btnms").hidden=false;
+
+  document.getElementById("rds").hidden=false;
+  document.getElementById("btncl").hidden=false;
+  document.getElementById("btncr").hidden=false;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        var imgbase64;
+        const ifile=document.getElementById("ifile");
+        const ifile2=document.getElementById("ifile2");
+        const artwork=document.getElementById("artwork");
+        const img=document.querySelector('#my_image');
+        const txt=document.getElementById("txtsf");
+
+        const img2=document.querySelector('#rimg');
+        const txt2=document.getElementById("txtsfr");
+
+        const btncl=document.getElementById("btncl");
+
+        btncl.addEventListener('click', function(event){
+          img.setAttribute('src',"../images/can.png");
+          txt.value="";
+          imgbase64="";
+          artwork.value="";
+        });
+        
+        function conv(x){
+
+      zx=x;
+
+
+        }
+
+        ifile.addEventListener('change', function(event){
+          const uploadedFile = document.querySelector('#ifile').files[0];
+		      toBase64(uploadedFile)
+		      .then(res => {
+          imgbase64=res;
+      artwork.value=imgbase64;
+	      	})
+		      .catch(err => {
+            imgbase64=err;
+            artwork.value="";
+	    	  })
+         
+        });
+
+      const toBase64 = file => new Promise((resolve, reject) => {
+	    const reader = new FileReader();
+      reader.addEventListener('load', function(){
+        if(zx==0){
+          img.setAttribute('src',reader.result);
+          txt.value=ifile.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
+          
+        }else{
+          img2.setAttribute('src',reader.result);
+          txt2.value=ifile.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
+          imgq=reader.result;
+        }
+             
+
+            
+            });
+
+	    reader.readAsDataURL(file);
+	    reader.onload = () => resolve(reader.result);
+	    reader.onerror = error => reject(error);
+	      });
+
+
+        var u = window.location.href;
+        var ur = new URL(u);
+        var l = ur.searchParams.get("artist");
+
+        // document.getElementById("ar1").href="artistabout.html?artist="+l;
+        // document.getElementById("ar2").href="artisteport.html?artist="+l;
+        // document.getElementById("ar3").href="reqcomm.html?artist="+l;
+        // document.getElementById("ar4").href="artistprice.html?artist="+l;
+
+
+       window.addEventListener('load', function(event){
+                        // loadinput();
+                        // loadDoc();
+as(0);
+as(1);
+as(3);
+as(4);   
+as(5);                 
+     
+        var u = window.location.href;
+                    var ur = new URL(u);
+        var aid = ur.searchParams.get("aid");
+        var bid = ur.searchParams.get("bid");
+        var cid = ur.searchParams.get("cid");
+
+        document.getElementById("via").href="commsum.html?aid="+aid+"&bid="+bid+"&cid="+cid+"&frm=commision";
+
+});
+                     
+ 
+ </script>
+  </body>
+</html>

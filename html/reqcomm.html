@@ -1,0 +1,321 @@
+<?php
+session_start();
+
+include("../php/conn.php");
+include("../php/read.php");
+include("../php/reqcomm.php");
+$user_data=check_login($link);
+
+?>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>theCreatives</title>
+
+    <!-- main css -->
+    <link rel="stylesheet" href="../css/reqcomm.css">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+
+    <!-- link for animate-->
+    <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <!-- link for font awesome -->
+    <script src="https://kit.fontawesome.com/9334436048.js" crossorigin="anonymous"></script>
+
+
+
+</head>
+<body>
+    <!-- header -->
+    <style>a{text-decoration: none;}</style>
+    <header class="header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-2 px-0">
+                    <div class="header_logo">
+                        <a href="explore.html"><span>the</span>Creatives</a>
+                    </div>
+                </div>
+                <div class="col-lg-10 ">
+                    <div class="header_right">
+                        <div class="header_right_auth">
+                            <a href="explore.html">Home</a>
+                            <a href="../html/artists.html">Artists</a>
+                            <a href="../php/logout.php" >Log Out</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- profile -->
+    <div id="content" class="container p-0">
+        <div class="profile-header">
+            <div class="profile-header-cover">
+                <img src="../images/white.png" alt="" style="height: 100%;width: 100%;" id="my_image4"/>
+              </div>
+              <div class="profile-header-content">
+                  <div class="profile-header-img">
+                    <img src="../images/empty.png" alt="" style="height: 100%;width: 100%;" id="my_image3"/>
+                  </div>
+                  <div class="profile-header-info">
+                      <h4 class="m-t-sm" id="uname"></h4>
+                  
+                  </div>
+              </div>
+    
+            <ul class="profile-header-tab nav nav-tabs">
+                <li class="nav-item"><a id="ar1" href="" class="nav-link" data-toggle="tab">ABOUT</a></li>
+                <li class="nav-item"><a id="ar2" href="" class="nav-link" data-toggle="tab">E-PORTFOLIO</a></li>
+                <li class="nav-item"><a id="ar3" href="" class="nav-link active show" data-toggle="tab">REQUEST COMMISSION</a></li>
+                <li class="nav-item"><a id="ar4" href="" class="nav-link" data-toggle="tab">PRICE LIST</a></li>
+            </ul>
+            
+        </div>
+        <!-- interface ng profile transaction -->
+      <div id="transac">
+        
+      </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+  
+                <form id="form" action="" method="post">
+                    <input type="text" name="artistid" id="artistid" hidden>
+                    <input type="text" name="artistuname" id="artistuname" hidden>
+                    <input type="text" name="fulln" id="fulln" hidden>
+                    
+                <label>Choose Art Type</label>
+                <select id="type" place name="type" required>
+                    <option value="" selected="selected" hidden>Select type of art</option>
+                   </select>
+            </div>
+                <div class="col-sm-6">
+                   <label>Choose Art Size</label>
+                   <select id="size" name="size" place required>
+                      </select>
+                      
+                    </div> 
+                    
+
+                    <div class="col-sm-6">      
+                      <label>Choose Target Date</label>
+                      <input type="date" id="tgdte" name="date" required>
+                      <input type="text" id="tartgdte" name="tardate" hidden>
+                    </div>
+
+                    <div class="col-sm-6">      
+                        <label>Base Price</label>
+                        <input type="text" id="price" name="" readonly>
+                        <input type="text" id="pr" name="price" hidden>
+                      </div>
+                   
+
+            <div class="col-sm-6"></div>
+
+                <label>Commission Details:</label>
+                
+                <textarea id="addet" style="height:200px" placeholder="Type out specifics here." name="addet"></textarea>
+                <div class="col-25">
+                <label>Reference Picture [Optional]:</label>
+                <button type="button" id="btncl">Clear</button>
+                <button id="btnc" type="button" onclick="ifile.click();">Browse files</button>
+                <input type="text" id="txtsf" value="" name="refpicname" readonly>
+                
+            </div>
+                <div class="piccontainer">
+
+                    <img src="../images/can.png" alt="empty" style="width:600px;height:300px;position: relative;margin-right: 0px;" id="my_image">
+                    <input type="text" name="refpic" id="artwork" value="" hidden> 
+                    <input type="file" id = "ifile" hidden>
+                </div> 
+            <div class="row">
+           
+                <div class="col-25">
+                  <button type="submit" id="su" onclick="as()" style="margin-right: 5%;">Send Request</button>
+                 
+                </div>
+              </div>
+            </form>
+        </div>
+
+      </div>
+      <!-- <div class="chatcont">
+        <div class="row">
+          <div>
+        <img src="../images/message.png" id="my_image5" height="30px">
+        <label id="clabel">Chat with Artist</label>
+        </div>
+      </div>
+      </div> -->
+
+    <!-- js for bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
+    
+    <script>
+
+        
+
+        
+
+function as(){
+
+var today = new Date();
+var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+// var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()+":"+today.getUTCMilliseconds();
+// var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+// var dateTime = date+' '+time;
+var dateTime = date;
+document.getElementById("tartgdte").value=dateTime;
+   
+        
+
+}
+        var imgbase64;
+        const ifile=document.getElementById("ifile");
+        const artwork=document.getElementById("artwork");
+        const img=document.querySelector('#my_image');
+        const txt=document.getElementById("txtsf");
+        const btncl=document.getElementById("btncl");
+
+        btncl.addEventListener('click', function(event){
+          img.setAttribute('src',"../images/can.png");
+          txt.value="";
+          imgbase64="";
+          artwork.value="";
+        });
+
+     
+        ifile.addEventListener('change', function(event){
+          const uploadedFile = document.querySelector('#ifile').files[0];
+		      toBase64(uploadedFile)
+		      .then(res => {
+          imgbase64=res;
+      artwork.value=imgbase64;
+	      	})
+		      .catch(err => {
+            imgbase64=err;
+            artwork.value="";
+	    	  })
+        });
+
+      const toBase64 = file => new Promise((resolve, reject) => {
+	    const reader = new FileReader();
+      reader.addEventListener('load', function(){
+              img.setAttribute('src',reader.result);
+              txt.value=ifile.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
+            });
+
+	    reader.readAsDataURL(file);
+	    reader.onload = () => resolve(reader.result);
+	    reader.onerror = error => reject(error);
+	      });
+
+
+        var u = window.location.href;
+        var ur = new URL(u);
+        var l = ur.searchParams.get("artist");
+
+        document.getElementById("ar1").href="artistabout.html?artist="+l;
+        document.getElementById("ar2").href="artisteport.html?artist="+l;
+        document.getElementById("ar3").href="reqcomm.html?artist="+l;
+        document.getElementById("ar4").href="artistprice.html?artist="+l;
+
+
+       window.addEventListener('load', function(event){
+                        loadinput();
+                        loadDoc();
+
+                     });
+                     
+      function loadinput(){
+               var propic="<?php echo $ui_pic;?>";
+               var covpic="<?php echo $ui_coverpic;?>";
+               var uname="<?php echo $ui_uname;?>";
+               var userid="<?php echo $ui_userid;?>";
+               var fulln ="<?php echo $ui_fname;?>" +" "+"<?php echo $ui_lname;?>";
+               document.getElementById("uname").innerHTML="@"+uname;
+               document.getElementById("artistid").value=userid;
+               document.getElementById("artistuname").value=uname;
+               document.getElementById("fulln").value=fulln;
+    if (!propic==""){
+           
+           document.getElementById("my_image3").setAttribute('src',propic); 
+
+        }else{
+            document.getElementById("my_image3").setAttribute('src',"../images/empty.png"); 
+        }
+
+        if (!covpic==""){
+            
+            document.getElementById("my_image4").setAttribute('src',covpic); 
+
+         }else{
+            document.getElementById("my_image4").setAttribute('src',"../images/white.png"); 
+
+         }
+            }
+
+ 
+
+
+      function loadDoc() {
+        var xhttp = new XMLHttpRequest();
+    
+        xhttp.onreadystatechange = function() {
+           
+          if (this.readyState == 4 && this.status == 200) {
+           
+            var typeObject=JSON.parse(this.responseText);
+            var typeSel = document.getElementById("type");
+          var sizeSel = document.getElementById("size");
+          var priceSel = document.getElementById("price");
+          for (var x in typeObject) 
+          {
+            typeSel.options[typeSel.options.length] = new Option(x, x);
+          }
+          
+          typeSel.onchange = function() 
+          {
+            //empty Chapters- and Topics- dropdowns
+            sizeSel.length = 1;
+           priceSel.value = "";
+            //display correct values
+            for (var y in typeObject[this.value]) 
+            {
+              sizeSel.options[sizeSel.options.length] = new Option(y, y);
+            }
+          }
+          sizeSel.onchange = function() 
+          {
+            //empty Chapters dropdown
+            priceSel.value = "";
+            //display correct values
+            var z = typeObject[typeSel.value][this.value];
+            for (var i = 0; i < z.length; i++) 
+            {
+              // priceSel.options[priceSel.options.length] = new Option(z[i], z[i]);
+              priceSel.value = "PHP "+new Option(z[i], z[i]).value+".00";
+              document.getElementById("pr").value=new Option(z[i], z[i]).value;
+            }
+          }
+
+            
+          }
+        };
+        xhttp.open("GET", "../php/pricelist.php?artist="+l, true);
+        xhttp.send();
+      }
+ </script>
+  </body>
+</html>

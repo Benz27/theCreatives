@@ -1,0 +1,174 @@
+<?php
+session_start();
+
+include("../php/conn.php");
+include("../php/read.php");
+include("../php/artist_info.php");
+
+$user_data=check_login($link);
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>theCreatives</title>
+
+    <!-- main css -->
+    <link rel="stylesheet" href="../css/artistprice.css">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+
+    <!-- link for animate-->
+    <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <!-- link for font awesome -->
+    <script src="https://kit.fontawesome.com/9334436048.js" crossorigin="anonymous"></script>
+
+
+
+</head>
+<body>
+    <!-- header -->
+    <style>a{text-decoration: none;}</style>
+    <header class="header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-2 px-0">
+                    <div class="header_logo">
+                        <a href="explore.html"><span>the</span>Creatives</a>
+                    </div>
+                </div>
+                <div class="col-lg-10 ">
+                    <div class="header_right">
+                        <div class="header_right_auth">
+                          <a href="explore.html">Home</a>
+                          <a href="../html/artists.html">Artists</a>
+                          <a href="../php/logout.php" >Log Out</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- profile -->
+    <div id="content" class="container p-0">
+        <div class="profile-header">
+          <div class="profile-header-cover">
+            <img src="../images/emptycov.jpg" alt="" style="height: 100%;width: 100%;" id="my_image4"/>
+          </div>
+          <div class="profile-header-content">
+              <div class="profile-header-img">
+                <img src="../images/empty.png" alt="" style="height: 100%;width: 100%;" id="my_image3"/>
+              </div>
+              <div class="profile-header-info">
+                  <h4 class="m-t-sm" id="uname"></h4>
+              </div>
+          </div>
+    
+            <ul class="profile-header-tab nav nav-tabs">
+              <li class="nav-item"><a id="ar1" href="" class="nav-link" data-toggle="tab">ABOUT</a></li>
+              <li class="nav-item"><a id="ar2" href="" class="nav-link" data-toggle="tab">E-PORTFOLIO</a></li>
+              <li class="nav-item"><a id="ar3" href="" class="nav-link" data-toggle="tab">REQUEST COMMISSION</a></li>
+              <li class="nav-item"><a id="ar4" href="" class="nav-link active show" data-toggle="tab">PRICE LIST</a></li>
+            </ul>
+        </div>
+        <!-- interface ng profile about -->
+        <div class="profile-container" style="background-color: rgb(223, 199, 180);">
+            <div class="table-container rounded bg-white"> 
+                <table class="table">
+                  <p id="oop"></p>
+                    <br>
+                    <h1>Price List</h1>
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Art Canvas Size</th>
+                        <th scope="col">Logo</th>
+                        <th scope="col">Digital</th>
+                      </tr>
+                    </thead>
+
+                    <tbody id="tbl">
+
+                      
+                  
+                    </tbody>
+
+                </table>
+              
+            </div>
+            
+        </div>
+
+
+    </div>
+    <!-- js for bootstrap -->
+   
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
+<script>
+
+
+window.addEventListener('load', function(event){
+    var u = window.location.href;
+        var ur = new URL(u);
+        var l = ur.searchParams.get("artist");
+
+         document.getElementById("ar1").href="artistabout.html?artist="+l;
+        document.getElementById("ar2").href="artisteport.html?artist="+l;
+        document.getElementById("ar3").href="reqcomm.html?artist="+l;
+        document.getElementById("ar4").href=l+"artistprice.html?artist="+l;
+                loadDoc();
+                loadinput();
+             });
+
+             function loadDoc() {
+        var xhttp = new XMLHttpRequest();
+    
+        xhttp.onreadystatechange = function() {
+           
+          if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("tbl").innerHTML = this.responseText;
+ 
+          }
+        };
+        var u = window.location.href;
+        var ur = new URL(u);
+        var l = ur.searchParams.get("artist");
+
+        xhttp.open("GET", "../php/artistprice.php?artist="+l, true);
+        xhttp.send();
+
+      }
+      function loadinput(){
+               var propic="<?php echo $ui_pic;?>";
+               var covpic="<?php echo $ui_coverpic;?>";
+               var uname="<?php echo $ui_uname;?>";
+               var utype="<?php echo $ui_utype;?>";
+               document.getElementById("uname").innerHTML="@"+uname;
+    if (!propic==""){
+           
+           document.getElementById("my_image3").setAttribute('src',propic); 
+
+        }else{
+            document.getElementById("my_image3").setAttribute('src',"../images/empty.png"); 
+        }
+
+        if (!covpic==""){
+            
+            document.getElementById("my_image4").setAttribute('src',covpic); 
+
+         }else{
+          document.getElementById("my_image4").setAttribute('src',"../images/white.png"); 
+
+         }
+            }
+
+
+</script>
+  </body>
+</html>

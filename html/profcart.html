@@ -1,0 +1,252 @@
+<?php
+session_start();
+
+include("../php/conn.php");
+include("../php/read.php");
+include("../php/user_info.php");
+
+$user_data=check_login($link);
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>theCreatives</title>
+
+    <!-- main css -->
+    <link rel="stylesheet" href="../css/profcart.css">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+
+    <!-- link for animate-->
+    <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <!-- link for font awesome -->
+    <script src="https://kit.fontawesome.com/9334436048.js" crossorigin="anonymous"></script>
+
+
+
+</head>
+<body>
+    <!-- header -->
+    <style>a{text-decoration: none;}</style>
+    <header class="header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-2 px-0">
+                    <div class="header_logo">
+                        <a href="explore.html"><span>the</span>Creatives</a>
+                    </div>
+                </div>
+                <div class="col-lg-10 ">
+                    <div class="header_right">
+                        <div class="header_right_auth">
+                            <a href="explore.html">Home</a>
+                            <a href="../php/logout.php">Log Out</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- profile -->
+    <div id="content" class="container p-0">
+        <div class="profile-header">
+            <div class="profile-header-cover">
+                <img src="../images/white.png" alt="" style="height: 100%;width: 100%;" id="my_image4"/>
+              </div>
+              <div class="profile-header-content">
+                  <div class="profile-header-img">
+                    <img src="../images/empty.png" alt="" style="height: 100%;width: 100%;" id="my_image3"/>
+                  </div>
+                  <div class="profile-header-info">
+                      <h4 class="m-t-sm" id="uname"></h4>
+                  </div>
+              </div>
+    
+            <ul class="profile-header-tab nav nav-tabs">
+                <li class="nav-item"><a href="profshowc.html" class="nav-link" data-toggle="tab">SHOWCASE</a></li>
+                <li class="nav-item"><a href="profabout.html" class="nav-link" data-toggle="tab">ABOUT</a></li>
+                <li class="nav-item" id="artlist2"><a href="profeport.html" class="nav-link" data-toggle="tab">E-PORTFOLIO</a></li>
+                <li class="nav-item" id="artlist3"><a href="proflistcomm.html" class="nav-link" data-toggle="tab">LIST OF COMMISSIONS</a></li>
+                <li class="nav-item"><a href="proftrans.html" class="nav-link" data-toggle="tab">TRANSACTIONS</a></li>
+                <li class="nav-item" id="artlist4"><a href="profearn.html" class="nav-link" data-toggle="tab">EARNINGS</a></li>
+                <li class="nav-item" id="artlist5"><a href="profprice.html" class="nav-link" data-toggle="tab">PRICE LIST</a></li>
+                <li class="nav-item"><a href="profcart.html" class="nav-link active show" data-toggle="tab">CART</a></li>
+            </ul>
+        </div>
+        <!-- interface ng profile cart -->
+      
+        <div class="profile-container">
+            <div class="cart_section">
+                <div class="container rounded bg-white">
+                    <div class="row">
+                        <div class="col-lg-10 offset-lg-1">
+
+                            <div class="cart_container">
+
+                               <div id="cart">
+
+
+                               </div>
+
+                                <div class="cart_buttons">
+                                <div class="buttons d-flex justify-content-center"> <button class="btn btn-outline-info mr-1"><a href="explore.html">Continue Shopping</a></button> <button id="chck" class="btn btn-outline-warning" disabled><a id="chcka" href="">Checkout</a></button><button id ="rem" class="btn btn-outline-danger" onclick="loadDoc(1)"disabled>Remove</button> </div>
+                                </div>
+
+                            </div>
+                
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- js for bootstrap -->
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
+<script>
+const arrurl=[];
+var arcount=0;
+var totprice;
+var usertype="<?php echo $ui_utype;?>";
+if (usertype=="user"){
+    document.getElementById("artlist2").hidden=true;
+    document.getElementById("artlist3").hidden=true;
+    document.getElementById("artlist4").hidden=true;
+    document.getElementById("artlist5").hidden=true;
+    }else{
+    document.getElementById("artlist2").hidden=false;
+    document.getElementById("artlist3").hidden=false;
+    document.getElementById("artlist4").hidden=false;
+    document.getElementById("artlist5").hidden=false;
+    
+}
+
+function chck(a){
+var checkbox = document.getElementById(a);
+
+    
+  if (checkbox.checked) {
+    arrurl.push(a);
+  } else {
+        const index = arrurl.indexOf(a);
+        arrurl.splice(index, 1);
+  }
+  arcount = arrurl.length;
+  if (arcount > 0){
+    document.getElementById("chck").disabled=false;
+    document.getElementById("rem").disabled=false;
+
+  }else{
+
+    document.getElementById("chck").disabled=true;
+    document.getElementById("rem").disabled=true;
+  }
+  uval = arrurl.filter(Boolean).join("+")
+  document.getElementById("chcka").href = "purchase.html?art_id="+uval+"&frm=profcart";
+  console.log(uval);
+}
+
+window.addEventListener('load', function(event){
+                        loadinput();
+                        loadDoc(0);
+  
+
+        });
+
+        
+
+                     function loadDoc(x) {
+            
+                       
+           var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+           
+          if (this.readyState == 4 && this.status == 200) {
+            if(x==0){
+   
+                document.getElementById("cart").innerHTML = this.responseText 
+                totprice = document.getElementById("tprice").value;  
+
+                
+
+            }else{
+
+                var licnt=document.getElementById("licnt");
+                for(let g=0,j=0;g < arcount;g++){
+                
+                    totprice -= document.getElementById(arrurl[j]+"inp").value;
+                    document.getElementById(arrurl[j]+"li").remove();
+                    const index = arrurl.indexOf(arrurl[j]);
+                    arrurl.splice(index, 1);
+                    
+                    licnt.value-=1;
+                }
+                if(licnt.value > 1){
+
+                    document.getElementById("md").innerHTML="("+ licnt.value +" items in your cart)"; 
+
+                }else if(licnt.value < 1){
+                    document.getElementById("md").innerHTML="(your items will apear here.)";
+                    document.getElementById("dprice").hidden=true;
+                    document.getElementById("ort").hidden=true;
+
+                }else{
+
+                    document.getElementById("md").innerHTML="("+ licnt.value +" item in your cart)";
+                 
+                }
+                document.getElementById("chck").disabled=true;
+                document.getElementById("rem").disabled=true;
+                document.getElementById("dprice").innerHTML="PHP "+totprice;  
+
+
+            }
+            ;
+ 
+          }
+        };
+
+        if(x==0){
+            xhttp.open("GET", "../php/cart.php?lt="+x, true);
+            
+        }else{
+            xhttp.open("GET", "../php/cart.php?lt="+x+"&ids="+uval, true);
+        }
+       
+        xhttp.send();
+      }
+
+      function loadinput(){
+               var propic="<?php echo $ui_pic;?>";
+               var covpic="<?php echo $ui_coverpic;?>";
+               var uname="<?php echo $ui_uname;?>";
+               var utype="<?php echo $ui_utype;?>";
+               document.getElementById("uname").innerHTML="@"+uname;
+    if (!propic==""){
+           
+           document.getElementById("my_image3").setAttribute('src',propic); 
+
+        }else{
+            document.getElementById("my_image3").setAttribute('src',"../images/empty.png"); 
+        }
+
+        if (!covpic==""){
+            
+            document.getElementById("my_image4").setAttribute('src',covpic); 
+
+         }else{
+            document.getElementById("my_image4").setAttribute('src',"../images/white.png"); 
+
+         }
+            }
+</script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+:root{
+    --bord:none;
+    
+    }
+    
+    *{
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+    .btn0
+    {
+        height: 40px;
+        width: 40%;
+        outline: none;
+        border: none;
+        background: rgb(170, 98, 3);
+        color: white;
+        border-radius: 60px;
+        font-weight: 700;
+    }
+    .main
+    {
+        background: url(../images/earthtone.jpg) repeat;
+        background-size: cover;
+        height: 100vh;
+        background-position: 50% 50%;
+        width: 100%;
+    }
+    .main h1
+    {
+        font-size: 4rem;
+        font-weight: 700;
+    }
+    .main h2 
+    {
+        font-size: 4rem;
+        font-weight: 700;
+        font-family: 'Birthstone', cursive;
+    }
+    .main h2 span
+    {
+        color: saddlebrown;
+        font-size: 4rem;
+        font-weight: 700;
+        font-family: 'Birthstone', cursive;
+    }
+    .inp
+    {
+        height: 50px;
+        width: 70%;
+        border: var(--bord);
+        outline: none;
+        border-radius: 60px;
+        box-shadow: 5px 1px 7px 3px rgba(0,0,0,0.54);
+        -webkit-box-shadow: 5px 1px 7px 3px rgba(0,0,0,0.54);
+        -moz-box-shadow: 5px 1px 7px 3px rgba(0,0,0,0.54);
+    }
+    .btn1
+    {
+        height: 50px;
+        width: 40%;
+        border: none;
+        outline: none;
+        border-radius: 60px;
+        font-weight: 600;
+        background: rgb(199, 143, 69);
+    }
+    .btn1:hover
+    {
+        background: burlywood;
+        transition: 0.5s;
+    }
+    .btn1 a
+    {
+        color: black;
+    }
+    .btn1 a:hover
+    {
+        color: black;
+    }
+    .btn2
+    {
+        height: 30px;
+        width: 40%;
+        border: none;
+        outline: none;
+        border-radius: 60px;
+        font-weight: 600;
+        background: rgb(128, 75, 6);
+    }
+    .btn2:hover
+    {
+        background: rgb(180, 108, 13);
+        transition: 0.5s;
+    }
+    .btn2 a
+    {
+        color: white;
+    }
+    .btn2 a:hover
+    {
+        color: white;
+    }
+    .fa-facebook-square
+    {
+        font-size: 2.5rem;
+        color: blue;
+        cursor: pointer;
+    }
+    .fa-google-plus-square
+    {
+        font-size: 2.5rem;
+        color: rgb(214, 9, 9);
+        cursor: pointer;
+    }
+    

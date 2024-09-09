@@ -1,0 +1,532 @@
+<?php
+session_start();
+
+include("../php/conn.php");
+include("../php/read.php");
+include("../php/p_user_info.php");
+
+$user_data=check_login($link);
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>theCreatives</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/checkout/">
+
+    <!-- Custom styles for this template -->
+    <link href="../css/purchase.css" rel="stylesheet">
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+
+    <!-- link for animate-->
+    <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <!-- link for font awesome -->
+    <script src="https://kit.fontawesome.com/9334436048.js" crossorigin="anonymous"></script>
+
+    <style>
+      .bd-placeholder-img 
+      {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) 
+      {
+        .bd-placeholder-img-lg 
+        {
+          font-size: 3.5rem;
+        }
+      }
+      a{text-decoration: none;}
+      
+
+    </style>
+  </head>
+  <body class="bg-light">
+    
+      <div class="container">
+        <main>
+          <div class="py-5 text-center">
+            <div class="header_logo">
+              <a style="text-decoration: none" href="" class="animate__animated animate__bounce animate__infinite"><span>the</span>Creatives</a>
+          </div>
+            <h2>Purchasing Form</h2>
+            <!-- 
+              <p class="lead">Below is an example form built entirely with Bootstrap’s form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
+            -->
+          </div>
+          <!-- cart 
+          <div class="row g-5">
+            <div class="col-md-5 col-lg-4 order-md-last">
+              <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-primary">Your cart</span>
+                <span class="badge bg-primary rounded-pill">3</span>
+              </h4>
+              <ul class="list-group mb-3">
+                <li class="list-group-item d-flex justify-content-between lh-sm">
+                  <div>
+                    <h6 class="my-0">Product name</h6>
+                    <small class="text-muted">Brief description</small>
+                  </div>
+                  <span class="text-muted">$12</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-sm">
+                  <div>
+                    <h6 class="my-0">Second product</h6>
+                    <small class="text-muted">Brief description</small>
+                  </div>
+                  <span class="text-muted">$8</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-sm">
+                  <div>
+                    <h6 class="my-0">Third item</h6>
+                    <small class="text-muted">Brief description</small>
+                  </div>
+                  <span class="text-muted">$5</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between bg-light">
+                  <div class="text-success">
+                    <h6 class="my-0">Promo code</h6>
+                    <small>EXAMPLECODE</small>
+                  </div>
+                  <span class="text-success">−$5</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                  <span>Total (USD)</span>
+                  <strong>$20</strong>
+                </li>
+              </ul>
+
+              <form class="card p-2">
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Promo code">
+                  <button type="submit" class="btn btn-secondary">Redeem</button>
+                </div>
+              </form>
+            </div>
+            -->
+
+            <!-- purchasing form -->
+           
+            <div class="col-lg-12">
+              <form class="needs-validation" id="form" action="#" method="post">
+
+               
+
+                <div class="row g-3">
+                  <div class="col-sm-6">
+                    <label for="firstName" class="form-label">First name</label>
+                    <input type="text" class="form-control" id="fname" name="fname" placeholder="First Name" value="" required readonly>
+                    <input type="text" id="ids" name="artids" value="" hidden>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <label for="lastName" class="form-label">Last name</label>
+                    <input type="text" class="form-control" id="lname" name="lname" placeholder="Last Name" value="" required readonly>
+                  </div>
+
+                  <div class="col-12">
+                    <label for="add" class="form-label">Address <span class="text-muted">(Optional)</span></label>
+                    <input type="add" class="form-control" id="address" name="address" placeholder="123 St., Manga Rd., Subd./Brgy./Municipaliy">
+                  </div>
+
+                  <div class="col-12">
+                    <label for="username" class="form-label">Username</label>
+                    <div class="input-group has-validation">
+                      <span class="input-group-text">@</span>
+                      <input type="text" class="form-control" id="uname" name="uname" value="" required readonly>
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="example@gmail.com" value="" required>
+                  </div>
+
+                <hr class="my-4">  
+
+                <div id="atdet">
+                
+                  
+               </div>
+
+               <div id="paytable" hidden>
+
+    
+
+           
+                 <table class="table">
+                     <h4>Payment</h4>
+                     <div class="my-3">
+                      <div class="form-check">
+                      <input id="credit"  type="radio" class="form-check-input" checked required>
+                      <label class="form-check-label" for="gcash">GCash</label>
+                      </div>
+                    </div>
+                     <thead>
+                       <tr>
+              
+                         <th scope="col">Reference Number</th>
+                         <th scope="col">Proof of Transaction</th>
+             
+                       </tr>
+                     </thead>
+                     <tbody id="tbody">
+
+
+                       <div id="payrow">
+
+
+
+
+                     </div>
+
+ 
+                       <tr>
+                         <td id="1rnum" style="cursor: pointer;"></td>
+                         <td id="1" style="cursor: pointer;" onclick="mod(this.value,this.id)"></td>
+                       </tr>
+                       <!-- 
+                       <tr>
+                         <th scope="row">2</th>
+                         <td>938479232489</td>
+                         <td value="">image.jpg</td>
+                         <td value="">Full</td>
+                       </tr> -->
+
+                     </tbody>
+
+                 </table>
+                 <input type="text" id="rimgn" name="rimgn" hidden>
+                 <input type="text" id="rnum" name="rnum" hidden>
+                 <input type="text" id="rimgs" name="rimgs" hidden>
+                 <input type="text" id="dte" name="dte" hidden>
+                 <input type="text" id="dteti" name="dteti" hidden>
+           </div>
+
+               <button type="button" id="btnadd" style="margin-bottom: 2%;">Add Payment</button>
+               <hr>
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="save-info" required>
+                  <label class="form-check-label" for="save-info">By clicking this, you agree to proceed to the checkout as well as to the <a href="#">Terms and Conditions.</a></label>
+                </div>
+
+                <hr class="my-4">
+
+                <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to Purchase</button>
+                <a id="canc"><button class="w-100 btn btn-secondary btn-sm" type="button">Cancel</button></a>
+              </form>
+            </div>
+          </div>
+        </main>
+
+        <footer class="my-5 pt-5 text-muted text-center text-small">
+          <p class="mb-1">&copy; 2017–2021 Company Name</p>
+          <ul class="list-inline">
+            <li class="list-inline-item"><a href="#">Privacy</a></li>
+            <li class="list-inline-item"><a href="#">Terms</a></li>
+            <li class="list-inline-item"><a href="#">Support</a></li>
+          </ul>
+        </footer>
+      </div>
+
+		<div class="d-flex align-items-center justify-content-center">
+			<div>
+				
+			</div>
+		</div>
+
+
+    <div id="myModal" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+    
+       
+
+        <div class="col-12">
+        <label>Reference Number:</label>
+        <input type="text" style="width: 40%;" id="txtrnum" value="" name="refpicname">
+      </div>
+      <br>
+      <div class="col-12">
+        <label>Proof of Payment [Optional]:</label>
+                    <button type="button" id="btncl">Clear</button>
+                    <button id="btncr" type="button" onclick="ifile.click();">Browse files</button>
+                    <input type="file" id = "ifile" hidden>
+                    <input type="text" style="width: 50%;" id="txtsfr" value="" name="refpicname" readonly>
+                    <br>
+        <img id="rimg" src="">
+    
+        <button id="btnms" type="button" onclick="savepay();">Save</button>
+        <button id="btnmc" type="button" onclick="span.click();">Cancel</button>
+      </div>
+    </div>
+    
+    </div>
+
+
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
+
+          <!-- <script src="form-validation.js"></script> -->
+		  <script>
+           var modal = document.getElementById("myModal");
+        var btn = document.getElementById("btnadd");
+var span = document.getElementsByClassName("close")[0];
+
+var imgq;
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+span.onclick = function() {
+  modal.style.display = "none";
+  clearr();
+}
+
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+    clearr();
+  }
+}
+
+// function as(){
+
+// var today = new Date();
+// var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+// // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()+":"+today.getUTCMilliseconds();
+// // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+// // var dateTime = date+' '+time;
+// var dateTime = date;
+// document.getElementById("tartgdte").value=dateTime;
+   
+        
+
+// }
+
+
+			window.addEventListener('load', function(event){
+      
+          loadDoc();
+          loadinput();
+        var u = window.location.href;
+        var ur = new URL(u);
+        var l = ur.searchParams.get("frm");
+       
+
+        if(l=="art"){
+          var t=ur.searchParams.get("art_id");
+          document.getElementById("canc").href=l+".html?art="+t;
+
+        }else{
+        document.getElementById("canc").href=l+".html";
+      }
+               
+             });
+      function loadDoc() {
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+        var c = url.searchParams.get("art_id");
+
+      document.getElementById("ids").value = c;
+        var xhttp = new XMLHttpRequest();
+    
+        xhttp.onreadystatechange = function() {
+           
+          if (this.readyState == 4 && this.status == 200) {
+
+            document.getElementById("atdet").innerHTML = this.responseText;
+ 
+          }
+        };
+        
+        xhttp.open("GET", "../php/purch.php?art_id="+c.replace(/ /g, '+'), true);
+        xhttp.send();
+      }
+
+      const inparray = [
+      
+
+"<?php echo $pche_fname;?>",
+"<?php echo $pche_lname;?>",
+"<?php echo $pche_email;?>",
+"<?php echo $pche_address;?>",
+"<?php echo $pche_uname;?>"
+
+
+]
+        function loadinput(){
+             
+         document.getElementById("fname").value=inparray[0];
+         document.getElementById("lname").value=inparray[1];
+         document.getElementById("email").value=inparray[2];
+         document.getElementById("address").value=inparray[3];
+         document.getElementById("uname").value=inparray[4];
+
+     
+
+      }
+
+      function clearr(){
+  xy=0;
+  document.getElementById("txtrnum").value="";
+  document.getElementById("txtsfr").value="";
+  document.getElementById("rimg").setAttribute('src',"");
+
+
+
+}
+
+      var imgbase64;
+        const ifile=document.getElementById("ifile");
+
+        const img2=document.querySelector('#rimg');
+        const txt2=document.getElementById("txtsfr");
+
+        ifile.addEventListener('change', function(event){
+          const uploadedFile = document.querySelector('#ifile').files[0];
+		      toBase64(uploadedFile)
+		      .then(res => {
+          imgbase64=res;
+
+	      	})
+		      .catch(err => {
+            imgbase64=err;
+
+	    	  })
+         
+        });
+
+      const toBase64 = file => new Promise((resolve, reject) => {
+	    const reader = new FileReader();
+      reader.addEventListener('load', function(){
+
+          img2.setAttribute('src',reader.result);
+          txt2.value=ifile.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
+          imgq=reader.result;
+
+             
+
+            
+            });
+
+	    reader.readAsDataURL(file);
+	    reader.onload = () => resolve(reader.result);
+	    reader.onerror = error => reject(error);
+	      });
+var xy=0;
+        
+        function savepay(){
+if(xy==0){
+// var rcount=1;
+// const element = document.getElementById("tbody");
+// const tr = document.createElement("tr");
+
+
+
+// const td = document.createElement("th");
+// const tdtxt = document.createTextNode(element.children.length+1);
+
+// td.appendChild(tdtxt);
+// tr.appendChild(td);
+document.getElementById("1rnum").innerHTML=document.getElementById("txtrnum").value;
+document.getElementById("1").innerHTML=document.getElementById("txtsfr").value;
+document.getElementById("1").value=imgq;
+document.getElementById("rnum").value=document.getElementById("txtrnum").value;
+document.getElementById("rimgn").value=document.getElementById("txtsfr").value;
+
+document.getElementById("rimgs").value=imgq;
+
+var today = new Date();
+var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+var dateTime = date+' '+time;
+
+document.getElementById("dte").value=date;
+document.getElementById("dteti").value=date+' '+time;
+
+// const td2 = document.createElement("td");
+// td2.style.cursor="pointer";
+// td2.setAttribute("id", rcount+"rnum");
+// const td2txt = document.createTextNode(document.getElementById("txtrnum").value);
+// td2.appendChild(td2txt);
+// tr.appendChild(td2);
+
+// const td3 = document.createElement("td");
+// td3.setAttribute("id", rcount);
+// td3.value=imgq;
+// td3.style.cursor="pointer";
+// td3.setAttribute("onclick", "mod(this.value,this.id)");
+
+// const td3txt = document.createTextNode(document.getElementById("txtsfr").value);
+// td3.appendChild(td3txt);
+// tr.appendChild(td3);
+
+
+// var today = new Date();
+// var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+// var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+// var dateTime = date+' '+time;
+
+// const td5 = document.createElement("td");
+// td5.setAttribute("id", rcount+"dte");
+// td5.hidden=true;
+// const td5txt = document.createTextNode(date);
+// td5.appendChild(td5txt);
+// tr.appendChild(td5);
+
+
+// const td6 = document.createElement("td");
+// td6.setAttribute("id", rcount+"dteti");
+// td6.hidden=true;
+// const td6txt = document.createTextNode(dateTime);
+// td6.appendChild(td6txt);
+// tr.appendChild(td6);
+
+
+
+
+
+
+// element.appendChild(tr);
+document.getElementById("paytable").hidden=false;
+document.getElementById("btnadd").hidden=true;
+span.click();
+
+}else{
+
+
+
+}
+
+}
+
+function mod(x,y){
+ 
+ btn.click();
+
+ document.getElementById("txtrnum").value=document.getElementById(y+"rnum").innerHTML;
+ document.getElementById("txtsfr").value=document.getElementById(y).innerHTML;
+ document.getElementById("rimg").setAttribute('src',x);
+
+ 
+
+}
+
+
+
+		  </script>
+  </body>
+</html>

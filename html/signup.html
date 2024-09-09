@@ -1,0 +1,246 @@
+<?php
+session_start();
+
+include("../php/conn.php");
+include("../php/signup.php");
+
+    
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>theCreatives</title>
+
+    <link rel="stylesheet" href="../css/signup.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Rubik&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Birthstone&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/9334436048.js" crossorigin="anonymous"></script>
+    
+</head>
+<body>
+
+   <style>a{text-decoration: none;}
+
+</style>
+    
+
+      <section class="main">
+          <div class="container py-5">
+              <div class="row py-4">
+                  <div class="col-lg-7 pt-5 text-center">
+                      <h1 class="pt-5">Express the Passion. Be Creative.</h1>
+                  </div>
+
+                  <div class="col-lg-5 text-center pt-5">
+                    <h2 class="animate__animated animate__bounce animate__infinite"><span>the</span>Creatives</h2>
+
+                    <form id="form" action="#" method="post">
+                        <div class="form-row py-2 pt-3">
+                            <div class="offset-1 col-lg-10">
+                                <!-- [A-Za-z][^' '-?*%$#]{1,15} -->
+                                <input id="txtuname" type="text" name="uname" class="inp px-3" placeholder="Username" value="" onchange="getuser(0)"  required>
+                            </div>
+                            
+                   
+                        </div>
+
+                        <div class="form-row py-2">
+                            <div class="offset-1 col-lg-10">
+                                <input id="txtfname" type="text" name="fname" class="inp px-3" placeholder="First Name" value=""  required>
+                            </div>
+                        </div>
+
+                        <div class="form-row py-2">
+                            <div class="offset-1 col-lg-10">
+                                <input id="txtlname" type="text" name="lname" class="inp px-3" placeholder="Last Name" value=""  required>
+                            </div>
+                        </div>
+
+                        <div class="form-row py-2">
+                            <div class="offset-1 col-lg-10">
+                                <input id="txtemail" type="email" name="email" class="inp px-3" placeholder="Email" value="" onchange="getuser(1)" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row py-2">
+                            <div class="offset-1 col-lg-10">
+                                <input id="txtpass" type="password" name="pass"class="inp px-3" placeholder="Password" onchange="fpass()" onclick="passclick()" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row py-2">
+                            <div class="offset-1 col-lg-10">
+                                <input id="txtconpass" type="password" name="conpass" class="inp px-3" placeholder="Confirm Password"  onclick="passclick()" required>
+                                
+                            </div>
+                        </div>
+                        <p id="alertp" style="color: red;"></p>
+                        <p id="ealertp" style="color: red;"></p>
+                        <div class="form-row py-4">
+                           
+                            <div class="offset-1 col-lg-10 py-2">
+                                <button class="btn1" id="btnsignup" type="submit">Sign Up</button>
+                            </div>
+                            
+                            <button class="btn2" type="button"><a href="login.html">Cancel</a></button>
+                        </div>
+                        <p></p>
+                        <p>By creating an account you agree to our <a href="terms.html" style="color:dodgerblue">Terms & Privacy</a>.</p>
+                    </form>
+                    
+                </div>
+              </div>
+          </div>
+        </section>
+
+
+
+
+        <!-- js bootstrap link -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
+        <script src="../javascript/jquery-3.6.0.js"></script>
+    <script>
+var input = document.getElementById('txtuname');
+var inval="Please match the requested format.";
+    var y=0;
+    var z;
+    var x;
+    var p1;
+    var p2;
+
+ 
+    var interc=false;   
+    var einterc=false;  
+
+function getuser(e) {   
+    if (e==0){      
+        var str=document.getElementById("txtuname").value; //str represents data or value inside text input in sql statement 
+        var que="username"; //str represents table in sql statement
+
+    }else{
+        var str=document.getElementById("txtemail").value;
+        var que="email";
+    }
+
+  var xmlhttp=new XMLHttpRequest();     
+  xmlhttp.onreadystatechange=function() {   
+    if (this.readyState==4 && this.status==200) {   // if the connection is valid or open
+      z=this.responseText;      //z fetches the response of the checkuser.pdf
+     y=Number(z);   //y converts it to integer
+       
+        //if y = 1 it means if fetches something which indicates the username or email was already taken and 0 if its not
+        if(y==1 && e==0){   
+            interc=true;    //if it fetches something (1) and if its the uname who triggers the function (0)
+        }else if (y==0 && e==0){
+            interc=false;   //if it didnt fetch something (0) and if its the uname who triggers the function (0)
+        }
+
+            if(y==1 && e==1){
+            einterc=true;   //if it fetches something (1) and if its the email who triggers the function (1)
+            }else if(y==0 && e==1){
+            einterc=false;  //if it fetches something (0) and if its the email who triggers the function (1)
+            }
+
+            //if the indicators are true it will then change the input texts design and if its false it will reset or return the default design
+
+            if (interc){
+                x=document.getElementById("txtuname").value;    
+                document.getElementById("txtuname").style.border="2px solid red";
+                document.getElementById("alertp").innerHTML="Username was already taken!";
+                document.getElementById("txtpass").value="";
+                document.getElementById("txtconpass").value="";
+            }else{
+                document.getElementById("txtuname").style.border="none";
+                document.getElementById("alertp").innerHTML="";
+                document.getElementById("txtpass").value="";
+                document.getElementById("txtconpass").value="";
+            }
+                if (einterc){
+                x=document.getElementById("txtemail").value;
+                document.getElementById("txtemail").style.border="2px solid red";
+                document.getElementById("ealertp").innerHTML="Email was already taken!";
+                }else{
+                x=document.getElementById("txtemail").value;
+                document.getElementById("txtemail").style.border="none";
+                document.getElementById("ealertp").innerHTML="";
+
+                }
+
+
+    }
+  }
+  
+  xmlhttp.open("GET","../php/checkuser.php?q="+str+ "&qu=" + que,true);     //this is the url string that will get the data. q and qu where url variables that the checkuser.php fetches. str(table) and que(data) where its values
+  xmlhttp.send();//sends the request
+}
+
+
+
+
+
+
+
+//gets the value of input text pass every mouse clicks inside of it
+function fpass(){
+ 
+p1=document.getElementById("txtpass").value;
+
+}
+//this function will stop the submission of form if the information requested by the webpage was not valid
+$(document).on("submit", "form", function(e){   //this detects the submission of form
+    p2=document.getElementById("txtconpass").value;
+    var result = p1.localeCompare(p2);      //if p1(pass) and p2(conpass) matches, the result value will be 1(true) and 0(false) if it doesnt
+if(interc || einterc){  //if neither of the indicators were true it will prevent the submission of forms and return/stop the function
+e.preventDefault();
+
+return  false;
+
+}else{
+    //if the indicators were true, it will then check of the password matches
+    if(result==0){
+   
+    }else{
+        //if it didnt the input text will change and prevents the submission of the form
+    document.getElementById("txtpass").style.border="2px solid red";
+    document.getElementById("txtconpass").style.border="2px solid red";
+    document.getElementById("alertp").innerHTML="Password did not match!";
+    document.getElementById("txtpass").value="";
+    document.getElementById("txtconpass").value="";
+    
+    e.preventDefault();
+
+    return  false;
+  
+    }
+}
+
+    
+});
+
+//this triggers every pass and conpass input text clicks
+//if the indicators were false it wont clear the valur of the alert paragraphs
+function passclick(){
+    if(interc || einterc){
+
+
+    }else{
+        document.getElementById("txtpass").style.border="none";
+    document.getElementById("txtconpass").style.border="none";
+    document.getElementById("alertp").innerHTML="";
+    document.getElementById("ealertp").innerHTML="";
+    }
+ 
+}
+
+    </script>
+    </body>
+</html>

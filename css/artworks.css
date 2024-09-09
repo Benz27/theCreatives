@@ -1,0 +1,250 @@
+:root {
+    --cmp:0px;
+    --topfnt:0px;
+    --botfnt:0px;
+   }
+   head{
+     background-color: #f2f2f2;
+   }
+   body{
+   background-color: #f2f2f2;
+   font-family: Maiandra GD;
+   }
+   .topnav {
+   position: relative;
+   left: 50%;
+   top: 40px;
+   
+   background-color: #f2f2f2;
+   
+     transform: translate(-50%,-50%);
+   height: 50px;
+   border-style: solid;
+     border-width: 0px 0px 4px 0px;
+   border-color: rgba(127, 255, 212, 0);
+   padding-left: var(--cmp);
+    
+   }
+   
+   .topnav a {
+     font-weight: bold;
+     float: left;
+     color: #000000;
+     text-align: center;
+     padding: 14px 16px 5px 16px;
+     text-decoration: none;
+     font-size: 17px;
+     background: 
+       linear-gradient(rgb(255, 0, 170), rgb(255, 0, 200)) bottom / 0% 2px no-repeat
+       #f2f2f2;
+       transition: .3s;
+   }
+   
+   .topnav a:hover {
+     
+    
+       background-size: 100% 2px;
+   }
+   
+   .topnav-centered a {
+     float: none;
+     position: absolute;
+     top: 50%;
+     left: 50%;
+     transform: translate(-50%, -50%);
+   }
+   
+   
+   
+   * {
+     box-sizing: border-box;
+   }
+   img{
+     display: inline-block;
+     margin-top: 1%;
+   }
+   button{
+     border-style: none;
+     border-radius: 10px;
+     height: 25px;
+     font-size: 14px;
+     padding-left: 12px;
+     padding-right: 12px;
+     background-color:rgb(255, 182, 46);
+    transition: background-color .3s;
+   
+    font-weight: bold;
+    cursor: pointer;
+   }
+   button:hover{
+     background-color:rgb(218, 141, 0);
+   
+       color: rgb(0, 0, 0);
+       transition: background-color .3s;
+      
+   }
+   
+   input[type=date]{
+     width: 50%;
+     padding: 12px;
+     margin-top: 14px;
+     border: 1px solid #ccc;
+     border-radius: 4px;
+     resize: vertical;
+     cursor: pointer;
+   }
+   select{
+   
+       width: 60%;
+     padding: 12px;
+     margin-bottom: 14px;
+     border: 2px solid rgb(83, 83, 83);
+     border-radius: 4px;
+     resize: vertical;
+     cursor: pointer;
+   }
+   textarea{
+       width: 100%;
+     border: 1px solid #ccc;
+     border-radius: 4px;
+     resize: vertical;
+   }
+   input[type=text] {
+     width: 70%;
+     padding: 5px;
+     border: 1px solid #ccc;
+     border-radius: 4px;
+     resize: vertical;
+     
+   }
+   
+   label {
+     padding: 12px 12px 12px 0;
+     display: inline-block;
+   width: 33%;
+   }
+   
+   
+   .container {
+     border-radius: 5px;
+     background-color: #f2f2f2;
+     padding: 20px;
+     margin-top: 2%;
+   }
+   .fieldcontainer{
+     border-radius: 5px;
+     background-color: #f2f2f2;
+     padding: 20px;
+     
+     align-items: top;
+     display: flex;
+     justify-content: center;
+   width: 770px;
+   height: 420px;
+   
+   
+   }
+   
+   .fieldcontainer select{
+   
+   
+     width: 75%;
+    
+   
+   }
+   .fieldcontainer fieldset{
+   
+   
+   width: 1160px;
+   /* border: solid 2px;
+   font-weight: bold; */
+   
+   }
+   
+   .fieldcontainer label{
+   
+   
+   width: 70%;
+   
+   
+   }
+   .fieldcontainer legend{
+   
+     all: unset;
+     margin-left: 5%;
+   }
+   
+   .piccontainer{
+     border-radius: 5px;
+     background-color: #f2f2f2;
+     padding: 20px;
+   
+     align-items: top;
+   
+     justify-content: center;
+   width: 600px;
+   
+   
+   }
+   .piccontainer label{
+   
+     margin-top: 20px;
+   }
+   .col-25 {
+     float: left;
+     width: 40%;
+     margin-top: 6px;
+   
+     margin-left: 5%;
+   }
+   
+   .col-75 {
+     float: left;
+     width: 40%;
+    
+   }
+   
+   .row:after {
+     content: "";
+     display: table;
+     clear: both;
+   }
+   
+   .transform{
+   
+   
+       transform: translate(-50%,-50%);
+   }
+   
+   @media screen and (max-width: 1250px) {
+     .col-25, .col-50, .col-75 {
+       width: 100%;
+       margin-top: 0;
+     }
+     .col-75{
+       margin-left: 5%;
+   
+     }
+   
+   }
+   #fold{
+     display: inline-block;
+     height: 30px;
+     width: 30px;
+     cursor: pointer;
+   transform: translate(0%,-10%);
+   }
+   #ifile{
+   
+     display: none;
+   }
+   #my_image2{
+     width:400px;height:250px;
+     position: relative;
+     background-color: lightgray;
+     transform: translate(10%,5%);
+   }
+   #imp{
+   
+   margin-left: 32%;
+   }

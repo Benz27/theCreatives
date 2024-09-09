@@ -1,0 +1,226 @@
+<?php
+session_start();
+
+include("../php/conn.php");
+include("../php/read.php");
+include("../php/user_info.php");
+
+$user_data=check_login($link);
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>theCreatives</title>
+
+    <!-- main css -->
+    <link rel="stylesheet" href="../css/profprice.css">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+
+    <!-- link for animate-->
+    <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <!-- link for font awesome -->
+    <script src="https://kit.fontawesome.com/9334436048.js" crossorigin="anonymous"></script>
+
+
+
+</head>
+<body>
+    <!-- header -->
+    <style>a{text-decoration: none;}</style>
+    <header class="header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-2 px-0">
+                    <div class="header_logo">
+                        <a href="explore.html"><span>the</span>Creatives</a>
+                    </div>
+                </div>
+                <div class="col-lg-10 ">
+                    <div class="header_right">
+                        <div class="header_right_auth">
+                            <a href="explore.html">Home</a>
+                            <a href="../php/logout.php">Log Out</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- profile -->
+    <div id="content" class="container p-0">
+        <div class="profile-header">
+          <div class="profile-header-cover">
+            <img src="../images/white.png" alt="" style="height: 100%;width: 100%;" id="my_image4"/>
+          </div>
+          <div class="profile-header-content">
+              <div class="profile-header-img">
+                <img src="../images/empty.png" alt="" style="height: 100%;width: 100%;" id="my_image3"/>
+              </div>
+              <div class="profile-header-info">
+                  <h4 class="m-t-sm" id="uname"></h4>
+              </div>
+          </div>
+    
+            <ul class="profile-header-tab nav nav-tabs">
+              <li class="nav-item"><a href="profshowc.html" class="nav-link" data-toggle="tab">SHOWCASE</a></li>
+              <li class="nav-item"><a href="profabout.html" class="nav-link" data-toggle="tab">ABOUT</a></li>
+              <li class="nav-item" id="artlist2"><a href="profeport.html" class="nav-link" data-toggle="tab">E-PORTFOLIO</a></li>
+              <li class="nav-item" id="artlist3"><a href="proflistcomm.html" class="nav-link" data-toggle="tab">LIST OF COMMISSIONS</a></li>
+              <li class="nav-item"><a href="proftrans.html" class="nav-link" data-toggle="tab">TRANSACTIONS</a></li>
+              <li class="nav-item" id="artlist4"><a href="profearn.html" class="nav-link" data-toggle="tab">EARNINGS</a></li>
+              <li class="nav-item" id="artlist5"><a href="profprice.html" class="nav-link active show" data-toggle="tab">PRICE LIST</a></li>
+              <li class="nav-item"><a href="profcart.html" class="nav-link" data-toggle="tab">CART</a></li>
+            </ul>
+        </div>
+        <!-- interface ng profile about -->
+        <div class="profile-container">
+            <div class="table-container rounded bg-white"> 
+                <table class="table">
+                  <p id="oop"></p>
+                    <br>
+                    <h1>Price List</h1>
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Art Canvas Size</th>
+                        <th scope="col">Logo</th>
+                        <th scope="col">Digital</th>
+                      </tr>
+                    </thead>
+
+                    <tbody id="tbl">
+
+                      
+                  
+                    </tbody>
+
+                </table>
+                <div class="mt-5 text-center">
+                  <button class="btn btn-primary profile-button" type="submit" id="submit" onclick="loadDoc(2)" disabled>Save</button>
+                  <!-- <button class="btn btn-secondary profile-button" type="button" id="cancel" disabled>Reset</button> -->
+              </div>
+            </div>
+            
+        </div>
+
+
+    </div>
+    <!-- js for bootstrap -->
+   
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
+<script>
+var inparray;
+var num=0;
+window.addEventListener('load', function(event){
+                        loadinput();
+                        for(let i=0; i<=1; i++){
+
+                          loadDoc(i);
+                        }
+                     });
+
+                     function loadDoc(x) {
+        var xhttp = new XMLHttpRequest();
+    
+        xhttp.onreadystatechange = function() {
+           
+          if (this.readyState == 4 && this.status == 200) {
+
+            if(x==0){
+
+            
+            document.getElementById("tbl").innerHTML = this.responseText;
+           
+
+          }else if(x==1){
+             inparray=JSON.parse("[" + this.responseText + "]");
+           
+          }else if(x==2){
+
+            inparray=JSON.parse("[" + this.responseText + "]");
+            document.getElementById("submit").disabled = true;
+        document.getElementById("cancel").disabled = true;
+        num=0;
+          }
+           }
+             };
+              if(x==2){
+
+              var formdata = new FormData();
+             for(let i=1; i<=36;i++){
+            formdata.append(i+"n",document.getElementById(i+"n").value);
+            
+              }
+            xhttp.open("POST", "../php/price.php?load="+x, true);
+            xhttp.send(formdata);
+             }else{
+             xhttp.open("GET", "../php/price.php?load="+x, true);
+          xhttp.send();
+              }
+   
+      }
+
+      function loadinput(){
+               var propic="<?php echo $ui_pic;?>";
+               var covpic="<?php echo $ui_coverpic;?>";
+               var uname="<?php echo $ui_uname;?>";
+               var utype="<?php echo $ui_utype;?>";
+               document.getElementById("uname").innerHTML="@"+uname;
+        if (!propic==""){
+           
+           document.getElementById("my_image3").setAttribute('src',propic); 
+
+        }else{
+            document.getElementById("my_image3").setAttribute('src',"../images/empty.png"); 
+        }
+
+        if (!covpic==""){
+            
+            document.getElementById("my_image4").setAttribute('src',covpic); 
+
+         }else{
+            document.getElementById("my_image4").setAttribute('src',"../images/white.png"); 
+
+         }
+       }
+
+function textchange(x, str) {
+  
+var p1=String(inparray[x]);
+var p2=String(str);
+
+var result = p1.localeCompare(p2);
+
+if (result==0){
+  num+=1;
+
+}else{
+  num-=1;
+
+}
+
+if (num==0){
+
+    document.getElementById("submit").disabled = true;
+    document.getElementById("cancel").disabled = true;
+    interc=false;
+}else{
+
+    document.getElementById("submit").disabled = false;
+    document.getElementById("cancel").disabled = false;
+    interc=true;
+}
+
+}
+
+</script>
+  </body>
+</html>

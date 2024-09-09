@@ -1,0 +1,399 @@
+<?php
+session_start();
+
+include("../php/conn.php");
+include("../php/read.php");
+include("../php/art.php");
+
+$user_data=check_login($link);
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>theCreatives</title>
+
+    <!-- main css -->
+    <link rel="stylesheet" href="../css/art.css" type="text/css">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+
+    <!-- link for animate-->
+    <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <!-- link for font awesome -->
+    <script src="https://kit.fontawesome.com/9334436048.js" crossorigin="anonymous"></script>
+    <!-- <link rel="stylesheet"href="../css/artworks.css"> -->
+    
+
+
+
+</head>
+<body>
+    <!-- header -->
+    <style>a{text-decoration: none;}
+    pre{ white-space:pre-wrap; word-wrap:break-word; }
+    .watermark{
+ position:absolute;
+
+ opacity:0.5;
+ z-index:99;
+display: flex;
+}
+#shbutton{
+    margin-top: 10%;
+    border-style: solid;
+
+    height: 25px;
+    font-size: 14px;
+    padding-left: 12px;
+    padding-right: 12px;
+
+    background-color:#29bbaa00;
+    border-color: rgb(252, 145, 51);
+
+   transition: background-color .3s;
+  
+   font-weight: bold;
+   cursor: pointer;
+  }
+  
+  #shbutton:hover{
+    background-color:sandybrown;
+  
+      color: rgb(0, 0, 0);
+      transition: background-color .3s;
+     
+  }
+
+</style>
+    <header class="header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-2 px-0">
+                    <div class="header_logo">
+                        <a href="explore.html"><span>the</span>Creatives</a>
+                    </div>
+                </div>
+                <div class="col-lg-10 ">
+                    <div class="header_right">
+                        <div class="header_right_auth">
+                            <a href="explore.html">Home</a>
+                            <a href="../php/logout.php">Log Out</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- profile -->
+    <!-- <div id="content" class="container p-0">
+        <div class="profile-header">
+            <div class="profile-header-cover">
+              <img src="../images/white.png" alt="" style="height: 100%;width: 100%;" id="my_image4"/>
+            </div>
+            <div class="profile-header-content">
+                <div class="profile-header-img">
+                  <img src="../images/empty.png" alt="" style="height: 100%;width: 100%;" id="my_image3"/>
+                </div>
+                <div class="profile-header-info">
+                    <h4 class="m-t-sm" id="uname"></h4>
+                </div>
+            </div>
+    
+            <ul class="profile-header-tab nav nav-tabs">
+              <li class="nav-item"><a href="profshowc.html" class="nav-link active show" data-toggle="tab">SHOWCASE</a></li>
+              <li class="nav-item"><a href="profabout.html" class="nav-link" data-toggle="tab">ABOUT</a></li>
+              <li class="nav-item" id="artlist2"><a href="profeport.html" class="nav-link" data-toggle="tab">E-PORTFOLIO</a></li>
+              <li class="nav-item" id="artlist3"><a href="proflistcomm.html" class="nav-link" data-toggle="tab">LIST OF COMMISSIONS</a></li>
+              <li class="nav-item"><a href="proftrans.html" class="nav-link" data-toggle="tab">TRANSACTIONS</a></li>
+              <li class="nav-item" id="artlist4"><a href="profearn.html" class="nav-link" data-toggle="tab">EARNINGS</a></li>
+              <li class="nav-item" id="artlist5"><a href="profprice.html" class="nav-link" data-toggle="tab">PRICE LIST</a></li>
+              <li class="nav-item"><a href="profcart.html" class="nav-link" data-toggle="tab">CART</a></li>
+            </ul>
+        </div>
+    
+
+    </div> -->
+
+
+
+      <div class="container">
+        <div class="row">
+            
+               
+                   
+
+            
+
+          
+                <div class="piccontainer">
+                  <!-- style="width:600px;height:300px;position: relative;margin-right: 0px;" -->
+
+
+                  
+                    <!-- <img src="../images/can.png" alt="empty" class="img-fluid col-sm-6"  id="my_image"> -->
+                    <canvas id="myCanvas"  class="img-fluid"></canvas>
+
+                    <input type="file" id = "ifile" hidden>
+                    <input type="text" name="artwork" id="artwork" value="" hidden> 
+                    <input type="text" name="artist" id="artist" value="" hidden> 
+                    <input type="text" name="unameinp" id="unameinp" value="" hidden> 
+                  
+
+                  </div>   
+                  
+                  <div class="col-25">
+                  
+                </div>
+                  <div class="col-sm-12" style="margin-left: 5%;">
+  
+                    
+                    <label id="artname"></label>
+                   
+                  
+                    <!-- <select id="type" style="margin-top: 2%;" name="type" required>
+                        <option value="" selected="selected" hidden>Select type of art</option>
+                        <option value="Logo">Logo</option>
+                        <option value="Digital">Digital</option>
+                       </select> -->
+                </div>
+
+<!--                 
+                  <div class="col-sm-6">
+                    <label>Art Size</label>
+                    <input type="text" id="size" name="tname" readonly>
+                     </div> 
+                     
+               
+                     <div class="col-sm-6">      
+                       <label>Art Name</label>
+                       <input type="text" name="artname" id="artname" value="" placeholder="Art Name" required> 
+                       <input type="text" id="tartgdte" name="tardate" hidden>
+                     </div>
+ 
+                     <div class="col-sm-6">      
+                         <label>Price</label>
+                         <input type="text" id="price" name="price" placeholder="PHP" required>
+                         <input type="text" id="pr" name="" hidden> -->
+                       <!-- </div> -->
+                       
+                  <!-- <label>Tell something about this art...</label>
+                
+                  <textarea id="descr" style="height:200px;background-color:aliceblue;" placeholder="Type out the details here." name="descr"></textarea>
+                 -->
+                 
+                 <div class="col-sm-11" style="margin-left: 5%;">
+                       
+                  <pre id="det"></pre>
+                  <br>
+                  <hr>
+                  <label id="artistt"></label>
+
+                  <label id="asize"></label>
+                  <!-- <label id="atype"></label> -->
+                  <label id="aprice"></label>
+                </div>
+
+                <hr>
+                  <div class="row">
+           
+                <div class="col-25">
+                  <a href="" id="ep"><button type="" onclick="" id="ebutton" hidden>Edit</button></a>
+                  <a href="profeport.html" id=""> <button type="" onclick="" id="epbutton" hidden>E-Porfolio</button></a>
+                  <a href="profshowc.html" id=""> <button type="" onclick="" id="shbutton" hidden>Showcase</button></a>
+
+
+                  <button onclick="dl()" style="margin-right: 5%;cursor:pointer" id="dbutton" hidden>Download</button>
+
+                  <!-- <button type="" onclick="dl()" style="margin-right: 5%;" id="dbutton" hidden>Download</button> -->
+                  <a href="" id="ba"><button type="" onclick="" id="pbutton" hidden>Buy artwork</button></a>
+
+                  <!-- <button href="" id="pbutton" style="cursor:pointer" hidden>Buy artwork</button> -->
+                  <!-- <button type="" onclick="addto(this.value)" id="sbutton" value="0" hidden>Add to cart</button> -->
+                  <button onclick="addto(this.value)" id="sbutton" value="0" hidden>Add to cart</button>
+                </div>
+              </div>
+
+                 </div>
+        
+
+      <script src="../javascript/jquery-3.6.0.js"></script>
+      <script>
+
+
+var imgbase64="<?php echo $art;?>";;
+var artname="<?php echo $artname;?>";
+var uname="<?php echo $uname;?>";
+var wt="<?php echo $wt;?>";
+var descr="<?php echo $descr;?>";
+var atype="<?php echo $atype;?>";
+var asize="<?php echo $asize;?>";
+var aprice="<?php echo $aprice;?>";
+var txt;
+
+
+function dl(){
+
+    var img    = document.getElementById("myCanvas").toDataURL();
+
+    var url=document.createElement("a");
+    url.href=img;
+    url.download=artname+".png"
+  url.click();
+
+
+}
+var u = window.location.href;
+        var ur = new URL(u);
+        var x = ur.searchParams.get("art");
+
+        document.getElementById("ba").href="purchase.html?art_id="+x+"&frm=art";
+
+
+
+        document.getElementById("artname").innerHTML=artname;
+document.getElementById("det").innerHTML=descr;
+document.getElementById("artistt").innerHTML="by "+uname;
+document.getElementById("asize").innerHTML=atype+": "+asize;
+document.getElementById("aprice").innerHTML="PHP "+aprice+".00";
+
+if(wt==0){
+
+  document.getElementById("ebutton").hidden=false;
+
+        var u = window.location.href;
+        var ur = new URL(u);
+        var x = ur.searchParams.get("art");
+
+        document.getElementById("ep").href="profshowc.html?art="+x;
+
+  document.getElementById("epbutton").hidden=false;
+  document.getElementById("shbutton").hidden=false;
+
+}else if(wt==1){
+
+
+  document.getElementById("pbutton").hidden=true;
+  document.getElementById("sbutton").hidden=true;
+  document.getElementById("dbutton").hidden=false;
+  document.getElementById("aprice").innerHTML="Already purchased";
+
+}else if(wt==2){
+
+  document.getElementById("pbutton").hidden=false;
+  document.getElementById("sbutton").hidden=false;
+  // document.getElementById("dbutton").hidden=false;
+
+  document.getElementById("sbutton").style.color="rgb(216, 154, 61)";
+  document.getElementById("sbutton").innerHTML="On cart";
+
+
+}else if(wt==3){
+  document.getElementById("pbutton").hidden=false;
+  document.getElementById("sbutton").hidden=false;
+  // document.getElementById("dbutton").hidden=false;
+
+
+  document.getElementById("sbutton").innerHTML="Add to cart";
+
+}
+
+
+
+var canvas=document.getElementById("myCanvas");
+var ctx=canvas.getContext("2d");
+var cw=canvas.width;
+var ch=canvas.height;
+
+var img=new Image();
+img.crossOrigin='anonymous';
+img.onload=start;
+img.src=imgbase64;
+function start(){
+  var dataURL=watermark(img,"by "+uname);
+}
+
+function watermark(canvas,text){
+  var tempCanvas=document.getElementById("myCanvas");
+  var tempCtx=tempCanvas.getContext('2d');
+  var cw,ch;
+  cw=tempCanvas.width=canvas.width;
+  ch=tempCanvas.height=canvas.height;
+
+ 
+  tempCtx.drawImage(img,0,0);
+  if (wt>1){
+
+    // ts=(cw*ch)/2227.84;
+ ts=cw-(cw/2);
+  tempCtx.font=ts+"% Birthstone";
+  tempCtx.textAlign = "center";
+  var textWidth=tempCtx.measureText(text).width;
+
+  // console.log("txtw: ",textWidth);
+  // console.log("ts: ",ts);
+
+  // console.log("height: ",ch);
+  // console.log("width: ",cw);
+  // console.log("area: ",cw*ch);
+  // console.log("sum: ",cw+ch);
+  // console.log("x: ",cw-textWidth-270);
+  // console.log("y: ",ch-100);
+  // console.log("wlimit: ",cw-(cw/2));
+
+  tempCtx.globalAlpha=.50;
+  tempCtx.fillStyle='white';
+  tempCtx.fillText(text,(cw/2)+2,(ch-(ch/7))+2);
+  tempCtx.fillStyle='black';
+  tempCtx.fillText(text,cw/2,ch-(ch/7));
+}
+}
+
+
+
+
+function addto(z) {
+        var btn = document.getElementById("sbutton");
+        
+       
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+           
+          if (this.readyState == 4 && this.status == 200) {
+            var y = Number(this.responseText);
+            if (y==1){
+              
+              btn.value=1;
+              btn.innerHTML="On cart";
+              btn.style.color='rgb(252, 145, 51)';
+
+            }else{
+              btn.value=0;
+              btn.innerHTML="Add to cart";
+              btn.style.color='saddlebrown';
+
+            }
+      
+          }
+        };
+
+        var u = window.location.href;
+        var ur = new URL(u);
+        var x = ur.searchParams.get("art");
+
+        xhttp.open("GET", "../php/addtocart.php?id="+x+"&c="+z, true);
+        xhttp.send();
+      }
+
+      </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
+      
+  </body>
+
+</html>

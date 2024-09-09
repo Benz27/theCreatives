@@ -1,0 +1,495 @@
+<?php
+session_start();
+
+include("../php/conn.php");
+include("../php/read.php");
+include("../php/user_info.php");
+
+$user_data=check_login($link);
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>theCreatives</title>
+
+  <!-- main css -->
+  <link rel="stylesheet" href="../css/profshowc.css" type="text/css">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+
+  <!-- link for animate-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+  <!-- link for font awesome -->
+  <script src="https://kit.fontawesome.com/9334436048.js" crossorigin="anonymous"></script>
+  <!-- <link rel="stylesheet"href="../css/artworks.css"> -->
+
+
+
+
+</head>
+
+<body>
+  <!-- header -->
+  <style>
+    a {
+      text-decoration: none;
+    }
+  </style>
+  <header class="header">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-2 px-0">
+          <div class="header_logo">
+            <a href="explore.html"><span>the</span>Creatives</a>
+          </div>
+        </div>
+        <div class="col-lg-10 ">
+          <div class="header_right">
+            <div class="header_right_auth">
+              <a href="explore.html">Home</a>
+              <a href="../php/logout.php">Log Out</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- profile -->
+  <div id="content" class="container p-0">
+    <div class="profile-header">
+      <div class="profile-header-cover">
+        <img src="../images/white.png" alt="" style="height: 100%;width: 100%;" id="my_image4" />
+      </div>
+      <div class="profile-header-content">
+        <div class="profile-header-img">
+          <img src="../images/empty.png" alt="" style="height: 100%;width: 100%;" id="my_image3" />
+        </div>
+        <div class="profile-header-info">
+          <h4 class="m-t-sm" id="uname"></h4>
+        </div>
+      </div>
+
+      <ul class="profile-header-tab nav nav-tabs">
+        <li class="nav-item"><a href="profshowc.html" class="nav-link active show" data-toggle="tab">SHOWCASE</a></li>
+        <li class="nav-item"><a href="profabout.html" class="nav-link" data-toggle="tab">ABOUT</a></li>
+        <li class="nav-item" id="artlist2"><a href="profeport.html" class="nav-link" data-toggle="tab">E-PORTFOLIO</a>
+        </li>
+        <li class="nav-item" id="artlist3"><a href="proflistcomm.html" class="nav-link" data-toggle="tab">LIST OF
+            COMMISSIONS</a></li>
+        <li class="nav-item"><a href="proftrans.html" class="nav-link" data-toggle="tab">TRANSACTIONS</a></li>
+        <li class="nav-item" id="artlist4"><a href="profearn.html" class="nav-link" data-toggle="tab">EARNINGS</a></li>
+        <li class="nav-item" id="artlist5"><a href="profprice.html" class="nav-link" data-toggle="tab">PRICE LIST</a>
+        </li>
+        <li class="nav-item"><a href="profcart.html" class="nav-link" data-toggle="tab">CART</a></li>
+      </ul>
+
+    </div>
+
+  </div>
+  <!-- <form id="form"> -->
+
+  <div class="container">
+    <div class="row">
+
+
+
+
+      <div class="col-sm-6"></div>
+
+
+      <div class="piccontainer">
+        <!-- style="width:600px;height:300px;position: relative;margin-right: 0px;" -->
+
+
+
+        <img src="../images/can.png" alt="empty" class="img-fluid col-sm-5" id="my_image">
+        <input type="file" id="ifile" hidden>
+        <input type="text" name="artwork" id="artwork" value="" hidden>
+        <input type="text" name="artist" id="artist" value="" hidden>
+        <input type="text" name="unameinp" id="unameinp" value="" hidden>
+
+
+      </div>
+
+      <div class="col-25">
+        <!-- <label>Reference Picture [Optional]:</label> -->
+
+
+
+        <button style="margin-left: 5%;" type="button" id="btncl">Clear</button>
+        <button id="btnc" type="button" onclick="ifile.click();">Browse file</button>
+
+        <input type="text" id="txtsf" value="" name="txtsf" readonly required>
+
+      </div>
+      <div class="col-sm-6">
+
+        <!-- <form id="form" action="#" method="post"> -->
+        <input type="text" name="artistid" id="artistid" hidden>
+        <input type="text" name="artistuname" id="artistuname" hidden>
+        <input type="text" name="fulln" id="fulln" hidden>
+
+        <label>Choose Art Type</label>
+        <select id="type" style="margin-top: 2%;" name="type" required>
+          <option value="" selected="selected" hidden>Select type of art</option>
+          <option value="Logo">Logo</option>
+          <option value="Digital">Digital</option>
+        </select>
+
+      </div>
+
+      <div class="col-sm-6">
+        <label>Art Size</label>
+        <input type="text" id="size" name="tname" value="" readonly>
+      </div>
+
+
+      <div class="col-sm-6">
+        <label>Art Name</label>
+        <input type="text" name="artname" id="artname" value="" placeholder="Art Name" required>
+        <input type="text" id="tartgdte" name="tardate" hidden>
+      </div>
+
+      <div class="col-sm-6">
+        <label>Price</label>
+        <input type="text" id="price" name="price" placeholder="PHP" required>
+        <!-- <input type="text" id="pr" name="" hidden> -->
+      </div>
+
+
+      <label>Tell something about this art...</label>
+
+      <textarea id="descr" style="height:200px;background-color:aliceblue;" placeholder="Type out the details here."
+        name="descr"></textarea>
+
+      <div id="setg" hidden>
+        <hr class="my-3">
+        <h4>Attach your Gcash account</h4>
+
+
+
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label for="gc-name" class="form-label">GCash Name </label>
+            <input type="text" class="form-control" name="gname" id="gname" placeholder="" required>
+
+          </div>
+          <div class="col-md-6">
+            <label for="gc-number" class="form-label">GCash number</label>
+            <input type="text" class="form-control" name="gnum" id="gnum" placeholder="09xxxxxxxxx" required>
+
+          </div>
+          <hr>
+        </div>
+      </div>
+
+      <div class="row">
+
+        <div class="col-25">
+          <button type="button" role="button" value="0" onclick="" id="submit">Submit Artwork</button>
+          <button type="" value="" onclick="" style="margin-right: 5%;" type="" id="canccc" hidden><a id="ac" href=""
+              style="color:black;">Cancel</a></button>
+        </div>
+      </div>
+      <!-- </form> -->
+    </div>
+
+    <!-- </form> -->
+    <script src="../javascript/jquery-3.6.0.js"></script>
+    <script>
+      // function as(){
+
+      // var today = new Date();
+      // var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+      // // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()+":"+today.getUTCMilliseconds();
+      // // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      // // var dateTime = date+' '+time;
+      // var dateTime = date;
+      // document.getElementById("tartgdte").value=dateTime;
+
+
+
+      // }
+
+      var usertype;
+      var imgbase64;
+      var ss = 0;
+      var artu;
+      var url_string = window.location.href;
+      var url = new URL(url_string);
+
+
+      function ldDoc(x) {
+
+
+        var xhttp = new XMLHttpRequest();
+        var formdata = new FormData();
+
+
+        xhttp.onreadystatechange = function () {
+          console.log(this);
+          if (this.readyState == 4 && this.status == 200) {
+
+            if (x == 2) {
+
+              var str = this.responseText;
+
+              const arr = str.split("|<~*931>|");
+              // console.log(arr);
+              document.getElementById("my_image").setAttribute('src', arr[0]);
+              document.getElementById("artname").value = arr[1];
+              document.getElementById("type").value = arr[2];
+              document.getElementById("size").value = arr[3];
+              document.getElementById("descr").value = arr[5];
+              document.getElementById("price").value = arr[4];
+              document.getElementById("txtsf").value = arr[6];
+              document.getElementById("canccc").hidden = false;
+              document.getElementById("ac").href = "art.html?art=" + arr[7];
+            } else {
+              location.replace("art.html?art=" + this.responseText);
+            }
+
+
+
+          }
+        }
+
+        if (x == 0) {
+
+
+          formdata.append("artwork", imgbase64);
+          formdata.append("artname", document.getElementById("artname").value);
+          formdata.append("type", document.getElementById("type").value);
+          formdata.append("tname", document.getElementById("size").value);
+          formdata.append("descr", document.getElementById("descr").value);
+          formdata.append("price", document.getElementById("price").value);
+          formdata.append("txtsf", document.getElementById("txtsf").value);
+
+          formdata.append("gname", document.getElementById("gname").value);
+          formdata.append("gnum", document.getElementById("gnum").value);
+
+          xhttp.open("POST", "../php/showc.php?s=" + x, true);
+          xhttp.send(formdata);
+        } else if (x == 2) {
+
+          xhttp.open("GET", "../php/showc.php?s=" + x + "&art=" + artu, true);
+          xhttp.send();
+
+        } else {
+
+
+
+          formdata.append("artname", document.getElementById("artname").value);
+          formdata.append("type", document.getElementById("type").value);
+          formdata.append("descr", document.getElementById("descr").value);
+          formdata.append("price", document.getElementById("price").value);
+
+
+
+          xhttp.open("POST", "../php/showc.php?s=" + x + "&art=" + artu, true);
+          xhttp.send(formdata);
+
+        }
+
+      }
+
+
+
+      if (url.searchParams.get("art")) {
+        artu = url.searchParams.get("art");
+        ss = 1;
+        document.getElementById("submit").value = 1;
+        document.getElementById("submit").innerHTML = "Save changes";
+        document.getElementById("btnc").disabled = true;
+        document.getElementById("btncl").disabled = true;
+        document.getElementById("content").hidden = true;
+        ldDoc(2);
+      } else {
+
+
+        ss = 0;
+      }
+
+
+
+      const ifile = document.getElementById("ifile");
+      const artwork = document.getElementById("artwork");
+      const img = document.querySelector('#my_image');
+      const txt = document.getElementById("txtsf");
+      const btncl = document.getElementById("btncl");
+      const img3 = document.querySelector('#my_image4');
+      const img2 = document.querySelector('#my_image3');
+
+      btncl.addEventListener('click', function (event) {
+        img.setAttribute('src', "../images/can.png");
+        txt.value = "";
+        imgbase64 = "";
+        // artwork.value="";
+      });
+
+
+
+      ifile.addEventListener('change', function (event) {
+        const uploadedFile = document.querySelector('#ifile').files[0];
+        toBase64(uploadedFile)
+          .then(res => {
+            imgbase64 = res;
+            // artwork.value=imgbase64;
+
+          })
+          .catch(err => {
+            imgbase64 = err;
+            // artwork.value="";
+          })
+      });
+
+      const toBase64 = file => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.addEventListener('load', function () {
+          const i = new Image();
+          img.setAttribute('src', reader.result);
+          i.src = reader.result;
+          img.onload = function () {
+
+            document.getElementById("size").value = i.naturalWidth + 'x' + i.naturalHeight;
+
+          };
+
+          txt.value = ifile.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
+        });
+
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+      });
+
+
+
+
+      window.addEventListener('load', function (event) {
+        loadinput();
+
+
+
+        if (usertype == "user") {
+          document.getElementById("artlist2").hidden = true;
+          document.getElementById("artlist3").hidden = true;
+          document.getElementById("artlist4").hidden = true;
+          document.getElementById("artlist5").hidden = true;
+          document.getElementById("setg").hidden = false;
+        } else {
+          document.getElementById("artlist2").hidden = false;
+          document.getElementById("artlist3").hidden = false;
+          document.getElementById("artlist4").hidden = false;
+          document.getElementById("artlist5").hidden = false;
+          document.getElementById("setg").hidden = true;
+
+
+
+
+        }
+
+
+
+      });
+
+
+
+      function loadinput() {
+
+        var propic = "<?php echo $ui_pic;?>";
+        var covpic = "<?php echo $ui_coverpic;?>";
+        var uname = "<?php echo $ui_uname;?>";
+        usertype = "<?php echo $ui_utype;?>";
+
+        document.getElementById("uname").innerHTML = "@" + uname;
+        if (!propic == "") {
+
+          img2.setAttribute('src', propic);
+
+        } else {
+          img2.setAttribute('src', "../images/empty.png");
+        }
+
+        if (!covpic == "") {
+
+          img3.setAttribute('src', covpic);
+
+        } else {
+          img3.setAttribute('src', "../images/white.png");
+
+        }
+
+      }
+
+
+      document.getElementById("submit").addEventListener('click', function (event) {
+
+        const arr = [
+
+          "artname",
+          "type",
+          "price",
+          "gname",
+          "gnum"
+
+
+        ];
+
+
+
+
+        var arrc = arr.length;
+
+        var v = 0;
+        var valid = document.getElementById("type").checkValidity();
+        for (let i = 0; i < arrc; i++) {
+
+          if (!document.getElementById(arr[i]).checkValidity()) {
+
+            v += 1;
+          }
+
+        }
+        if (usertype == "artist") {
+          v -= 2;
+        }
+
+        if (v > 0) {
+
+          document.getElementById("type").checkValidity();
+          document.getElementById("price").reportValidity();
+          document.getElementById("type").reportValidity();
+          document.getElementById("artname").reportValidity();
+
+          if (usertype == "user") {
+            document.getElementById("gname").reportValidity();
+            document.getElementById("gnum").reportValidity();
+          }
+
+        } else {
+          document.getElementById("submit").disabled = true;
+          ldDoc(document.getElementById("submit").value);
+        }
+
+
+
+      });
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ"
+      crossorigin="anonymous"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,310 @@
+<?php
+session_start();
+
+include("../php/conn.php");
+include("../php/read.php");
+include("../php/p_user_info.php");
+
+$user_data=check_login($link);
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>theCreatives</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/checkout/">
+
+    <!-- Custom styles for this template -->
+    <link href="../css/purchase.css" rel="stylesheet">
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+
+    <!-- link for animate-->
+    <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <!-- link for font awesome -->
+    <script src="https://kit.fontawesome.com/9334436048.js" crossorigin="anonymous"></script>
+
+    <style>
+      .bd-placeholder-img 
+      {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) 
+      {
+        .bd-placeholder-img-lg 
+        {
+          font-size: 3.5rem;
+        }
+      }
+      a{text-decoration: none;}
+
+      #hbutton{
+    margin-top: 10%;
+    border-style: solid;
+
+    height: 25px;
+    font-size: 14px;
+    padding-left: 12px;
+    padding-right: 12px;
+
+    background-color:#29bbaa00;
+    border-color: rgb(252, 145, 51);
+
+   transition: background-color .3s;
+  
+   font-weight: bold;
+   cursor: pointer;
+  }
+  
+  #hbutton:hover{
+    background-color:sandybrown;
+  
+      color: rgb(0, 0, 0);
+      transition: background-color .3s;
+     
+  }
+
+  #bbutton{
+    margin-top: 10%;
+    border-style: solid;
+
+    height: 25px;
+    font-size: 14px;
+    padding-left: 12px;
+    padding-right: 12px;
+
+    background-color:#29bbaa00;
+    border-color: rgb(252, 145, 51);
+
+   transition: background-color .3s;
+  
+   font-weight: bold;
+   cursor: pointer;
+  }
+  
+  #bbutton:hover{
+    background-color:sandybrown;
+  
+      color: rgb(0, 0, 0);
+      transition: background-color .3s;
+     
+  }
+  #pbutton{
+    margin-top: 10%;
+    border-style: solid;
+
+    height: 25px;
+    font-size: 14px;
+    padding-left: 12px;
+    padding-right: 12px;
+
+    background-color:#29bbaa00;
+    border-color: rgb(252, 145, 51);
+
+   transition: background-color .3s;
+  
+   font-weight: bold;
+   cursor: pointer;
+  }
+  
+  #pbutton:hover{
+    background-color:sandybrown;
+  
+      color: rgb(0, 0, 0);
+      transition: background-color .3s;
+     
+  }
+
+    </style>
+  </head>
+  <body class="bg-light">
+    
+      <div class="container">
+        <main>
+          <div class="py-5 text-center">
+            <!-- <div class="header_logo">
+              <a style="text-decoration: none" href="" class="animate__animated animate__bounce animate__infinite"><span>the</span>Creatives</a>
+          </div> -->
+            <h2>Art Commision</h2>
+          
+          </div>
+         
+
+      
+           
+            <div class="col-lg-12">
+      
+                <div class="row g-3" id="det">
+
+                  
+
+                  
+                  
+                </div>
+
+
+                
+         
+        </main>
+
+        <!-- <footer class="my-5 pt-5 text-muted text-center text-small">
+          <p class="mb-1">&copy; 2017–2021 Company Name</p>
+          <ul class="list-inline">
+            <li class="list-inline-item"><a href="#">Privacy</a></li>
+            <li class="list-inline-item"><a href="#">Terms</a></li>
+            <li class="list-inline-item"><a href="#">Support</a></li>
+          </ul>
+        </footer> -->
+      </div>
+
+		<div class="d-flex align-items-center justify-content-center">
+			<div>
+				
+			</div>
+		</div>
+
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
+
+          <script src="form-validation.js"></script>
+		  <script>
+
+window.addEventListener('load', function(event){
+    
+
+        
+
+           
+                        loadDoc(0);
+               
+            
+       
+    
+
+             
+                    
+                        
+                     });
+
+                     function loadDoc(x) {
+                        var u = window.location.href;
+        var ur = new URL(u);
+        var frm = ur.searchParams.get("frm");
+        var cid = ur.searchParams.get("cid");
+
+        var bid = ur.searchParams.get("bid");
+        var aid = ur.searchParams.get("aid");
+
+        
+
+        var xhttp = new XMLHttpRequest();
+    
+        xhttp.onreadystatechange = function() {
+           
+          if (this.readyState == 4 && this.status == 200) {
+            
+            if(x==0){
+
+            
+            document.getElementById("det").innerHTML = this.responseText;
+  
+
+          }
+          }
+        };
+        if(x==0){
+            xhttp.open("GET", "../php/commsum.php?load="+x+"&frm="+frm+"&cid="+cid+"&bid="+bid+"&aid="+aid, true);
+        xhttp.send();
+
+        }
+       
+        
+        
+   
+      }
+
+// function as(){
+
+// var today = new Date();
+// var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+// // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()+":"+today.getUTCMilliseconds();
+// // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+// // var dateTime = date+' '+time;
+// var dateTime = date;
+// document.getElementById("tartgdte").value=dateTime;
+   
+        
+
+// }
+
+
+	// 		window.addEventListener('load', function(event){
+      
+    //       loadDoc();
+    //       loadinput();
+    //     var u = window.location.href;
+    //     var ur = new URL(u);
+    //     var l = ur.searchParams.get("frm");
+    //     document.getElementById("canc").href=l+".html";
+               
+    //          });
+    //   function loadDoc() {
+    //     var url_string = window.location.href;
+    //     var url = new URL(url_string);
+    //     var c = url.searchParams.get("art_id");
+
+    //   document.getElementById("ids").value = c;
+    //     var xhttp = new XMLHttpRequest();
+    
+    //     xhttp.onreadystatechange = function() {
+           
+    //       if (this.readyState == 4 && this.status == 200) {
+
+    //         document.getElementById("atdet").innerHTML = this.responseText;
+ 
+    //       }
+    //     };
+        
+    //     xhttp.open("GET", "../php/purch.php?art_id="+c.replace(/ /g, '+'), true);
+    //     xhttp.send();
+    //   }
+
+//       const inparray = [
+      
+
+// "<?php echo $pche_fname;?>",
+// "<?php echo $pche_lname;?>",
+// "<?php echo $pche_email;?>",
+// "<?php echo $pche_address;?>",
+// "<?php echo $pche_uname;?>"
+
+
+// ]
+//         function loadinput(){
+             
+//          document.getElementById("fname").value=inparray[0];
+//          document.getElementById("lname").value=inparray[1];
+//          document.getElementById("email").value=inparray[2];
+//          document.getElementById("address").value=inparray[3];
+//          document.getElementById("uname").value=inparray[4];
+
+     
+
+//       }
+
+        
+        
+
+		  </script>
+  </body>
+</html>

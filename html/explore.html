@@ -1,0 +1,290 @@
+<?php
+session_start();
+
+include("../php/conn.php");
+include("../php/read.php");
+
+$user_data=check_login($link);
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>theCreatives</title>
+
+  <!-- main css -->
+  <link rel="stylesheet" href="../css/explore.css">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+
+  <!-- link for animate-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+  <!-- link for font awesome -->
+  <script src="https://kit.fontawesome.com/9334436048.js" crossorigin="anonymous"></script>
+
+</head>
+<style>
+  #md.sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    float: left;
+    left: 50%;
+    top: 50%;
+    z-index: 5;
+    height: 500px;
+    width: 500px;
+    display: block;
+    border-radius: 30px;
+    background-color: #dfc7b4;
+    padding-bottom: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 30px;
+  }
+</style>
+
+<body>
+  <!-- header -->
+  <style>
+    a {
+      text-decoration: none;
+    }
+  </style>
+  <header class="header">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-2">
+          <div class="header_logo">
+            <a href="explore.html"
+              class="animate__animated animate__bounce animate__infinite"><span>the</span>Creatives</a>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <nav>
+            <div class="header_menu">
+              <ul>
+                <li class="active"><a href="explore.html">Explore</a></li>
+                <li><a href="artists.html">Request Art Commissions</a></li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+        <div class="col-lg-3">
+          <div class="header_right">
+            <div class="header_right_auth">
+              <a href="profabout.html">Profile</a>
+              <a href="../php/logout.php">Log Out</a>
+            </div>
+          </div>
+        </div>
+        <!-- search box -->
+        <div class="row height d-flex justify-content-center align-items-center">
+          <div class="col-md-6">
+            <div class="form"> <i class="fa fa-search" onclick="oncl();" style="cursor: pointer;"></i> <input
+                type="text" class="form-control form-input" id="srch" placeholder="Search anything..."> </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- album -->
+  <div class="container-fluid">
+    <div class="px-lg-5">
+
+      <!-- For Cover purpose 
+          <div class="row py-5">
+            <div class="col-lg-12 mx-auto">
+              <div class="text-white p-5 shadow-sm rounded banner">
+                <h1 class="display-4">Bootstrap 4 photo gallery</h1>
+                <p class="lead">Bootstrap photogallery snippet.</p>
+                <p class="lead">Snippet by <a href="https://bootstrapious.com/snippets" class="text-reset"> 
+                              Bootstrapious</a>, Images by <a href="https://unsplash.com" class="text-reset">Unsplash</a>.
+                </p>
+              </div>
+            </div>
+          </div> -->
+      <!-- End -->
+
+
+      <div class="row py-5" id="explore">
+
+      </div>
+      <div class="py-5 text-right">
+        <a href="#" id="rt" class="btn btn-dark px-5 py-3 text-uppercase" hidden>Return to top</a>
+      </div>
+    </div>
+  </div>
+
+
+  </div>
+  <div id="md">
+    <div class="md-pic"></div>
+    <div class="md-art-name"></div>
+    <div class="md-artist-name"></div>
+    <div class="md-art-details"></div>
+    <div class="md-art-price"></div>
+    <button class="md-art-purchase"></button>
+    <button class="md-close"></button>
+  </div>
+  <script>
+    function s() {
+      document.getElementById("md").style.display = "block";
+    }
+  </script>
+
+  <!-- js for bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ"
+    crossorigin="anonymous"></script>
+  <script>
+
+    var ldc = 0;
+    window.addEventListener('load', function (event) {
+
+
+      loadDoc(0);
+      // ldfeed();
+
+
+    });
+
+
+
+    //          function ldfeed(){
+    //            if(ldc==0){
+
+    //             loadDoc(0);
+    //             console.log(ldc);
+    //            }
+
+    // setTimeout(arguments.callee, 5000);
+    //   };
+
+
+    function oncl() {
+      if (document.getElementById("srch").value != "") {
+
+        // ldc=1;
+        loadDoc(1);
+      } else {
+        loadDoc(0);
+        // idc=0;
+      }
+
+
+
+    };
+
+
+
+    function loadDoc(x) {
+
+      var xhttp = new XMLHttpRequest();
+
+      xhttp.onreadystatechange = function () {
+
+        if (this.readyState == 4 && this.status == 200) {
+          console.log(this.responseText);
+          document.getElementById("explore").innerHTML = this.responseText;
+
+
+
+          var body = document.body,
+            html = document.documentElement;
+
+          var height = Math.max(body.scrollHeight, body.offsetHeight,
+            html.clientHeight, html.scrollHeight, html.offsetHeight
+          );
+
+          var wh = window.innerHeight;
+
+          //  console.log(height);
+          // console.log(wh);
+
+          // console.log(body.scrollHeight);
+          // console.log(body.offsetHeight);
+          // console.log(html.clientHeight);
+          // console.log(html.scrollHeight);
+          // console.log(html.offsetHeight);
+
+          // console.log(document.documentElement.scrollHeight);
+
+          if (height >= wh * 2) {
+            rt.hidden = false;
+          };
+
+
+        }
+      };
+
+
+
+      if (x == 0) {
+
+        xhttp.open("GET", "../php/explore.php?c=" + x, true);
+        xhttp.send();
+      } else {
+        xhttp.open("GET", "../php/explore.php?c=" + x + "&qu=" + document.getElementById("srch").value, true);
+        xhttp.send();
+      }
+
+
+    };
+
+
+    function addto(x, z) {
+      console.log(x, z);
+      var btn = document.getElementById(x);
+
+
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function () {
+        console.log(this);
+        if (this.readyState == 4 && this.status == 200) {
+          var y = Number(this.responseText);
+          if (y == 1) {
+
+            btn.value = 1;
+            btn.innerHTML = "On cart";
+            btn.style.background = '#ffc107';
+            btn.style.color = '#4a93fe';
+          } else {
+            btn.value = 0;
+            btn.innerHTML = "Add to cart";
+            btn.style.background = 'none';
+            btn.style.color = '#ffc107';
+          }
+
+        }
+      };
+      xhttp.open("GET", "../php/addtocart.php?id=" + x + "&c=" + z, true);
+      xhttp.send();
+    }
+
+    document.getElementById("srch").addEventListener('keydown', function (event) {
+
+
+      if (event.key === 'Enter' || event.keyCode === 13) {
+
+        oncl();
+
+      }
+
+
+    });
+
+
+
+
+  </script>
+</body>
+
+</html>
